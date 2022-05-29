@@ -1,0 +1,35 @@
+.menu {
+    background-color: var(--theme-secondary-bg);
+    color: var(--theme-secondary-fg);
+    min-width: 240px;
+}
+
+.menu-item {
+    font-size: 15px;
+    position: relative;
+    line-height: 50px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: var(--theme-secondary-hover-bg);
+}
+
+.menu-item__icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 54px;
+    bottom: 0;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.menu-item__content {
+    padding-left: 54px;
+    padding-right: 16px;
+    letter-spacing: -0.02em;
+    font-weight: 100;
+}

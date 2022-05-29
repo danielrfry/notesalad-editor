@@ -1,0 +1,10 @@
+.drop-down-list {
+    background-color: var(--theme-secondary-bg);
+    color: var(--theme-secondary-fg);
+    padding: 8px;
+    border: none;
+    outline: none;
+    font-family: var(--theme-font-family);
+    width: 100%;
+    text-transform: uppercase;
+}

@@ -1,0 +1,13 @@
+.exportSysExDlg__destination {
+    background-color: var(--theme-secondary-bg);
+}
+.exportSysExDlg__destParams {
+    width: 540px;
+}
+.exportSysExDlg__dropDownGroup {
+    column-gap: 5px;
+}
+.exportSysExDlg__bankSelect,
+.exportSysExDlg__progSelect {
+    width: min-content;
+}

@@ -1,0 +1,120 @@
+/* Layout */
+.page-control {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.page-control__button {
+    position: relative;
+    width: 32px;
+}
+
+.page-control__button-left .button {
+    position: absolute;
+    right: 10px;
+}
+
+.page-control__button-right .button {
+    position: absolute;
+    left: 10px;
+}
+
+.page-control__button--hidden {
+    display: none;
+}
+
+.page-control__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.page-control__page {
+    position: relative;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.page-control__page--hidden {
+    visibility: hidden;
+}
+
+/* Buttons animation */
+.page-control__button.page-control__button-enter {
+    display: initial;
+    width: 0;
+}
+
+.page-control__button.page-control__button-enter.page-control__button-enter-active {
+    transition-property: width;
+    transition-duration: 500ms;
+    width: 32px;
+}
+
+.page-control__button.page-control__button-exit {
+    display: initial;
+    width: 32px;
+}
+
+.page-control__button.page-control__button-exit-active {
+    transition-property: width;
+    transition-duration: 500ms;
+    width: 0;
+}
+
+/* Page transition properties */
+.page-control__page.page-control__page-enter-active,
+.page-control__page.page-control__page-exit-active {
+    transition-property: left, opacity;
+    transition-duration: 500ms;
+    visibility: visible;
+}
+
+/* Page opacity animation */
+.page-control__page-enter {
+    opacity: 0;
+}
+.page-control__page-enter.page-control__page-enter-active {
+    opacity: 1;
+}
+
+.page-control__page-exit {
+    opacity: 1;
+}
+.page-control__page-exit.page-control__page-exit-active {
+    opacity: 0;
+}
+
+/* Page position enter animation */
+.page-control--transition-left .page-control__page-enter {
+    left: 100%;
+}
+
+.page-control--transition-right .page-control__page-enter {
+    left: -100%;
+}
+
+.page-control--transition-left
+    .page-control__page-enter.page-control__page-enter-active,
+.page-control--transition-right
+    .page-control__page-enter.page-control__page-enter-active {
+    left: 0;
+}
+
+/* Page position exit animation */
+.page-control--transition-left .page-control__page-exit,
+.page-control--transition-right .page-control__page-exit {
+    left: 0;
+}
+
+.page-control--transition-left
+    .page-control__page.page-control__page-exit-active {
+    left: -100%;
+}
+
+.page-control--transition-right
+    .page-control__page.page-control__page-exit-active {
+    left: 100%;
+}

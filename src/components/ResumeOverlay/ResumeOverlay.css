@@ -1,0 +1,31 @@
+.resume-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.resume-overlay * {
+    cursor: pointer;
+}
+
+.resume-overlay__background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.resume-overlay__foreground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}

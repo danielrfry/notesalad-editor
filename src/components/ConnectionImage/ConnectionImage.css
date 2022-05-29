@@ -1,0 +1,14 @@
+.conn-image text {
+    font-size: 9px;
+    font-weight: bold;
+    fill: currentColor;
+}
+.conn-image path,
+.conn-image rect {
+    fill: none;
+    stroke: currentColor;
+}
+.conn-image .conn-image__arrow {
+    fill: currentColor;
+    stroke: none;
+}

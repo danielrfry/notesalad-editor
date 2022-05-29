@@ -1,0 +1,52 @@
+body {
+    --theme-fg: white;
+    --theme-bg: #222;
+    --theme-border: white;
+    --theme-hover-bg: #333;
+    --theme-secondary-bg: #181818;
+    --theme-secondary-fg: var(--theme-fg);
+    --theme-secondary-hover-bg: #333;
+    --theme-highlight-bg: hsl(271, 76%, 53%);
+    --theme-highlight-fg: var(--theme-fg);
+    --theme-highlight-hover-bg: hsl(271, 76%, 63%);
+    --theme-highlight-text: hsl(271, 100%, 71%);
+    --theme-toolbar-bg: var(--theme-secondary-bg);
+    --theme-toolbar-fg: var(--theme-secondary-fg);
+    --theme-toolbar-highlight-bg: var(--theme-highlight-bg);
+    --theme-toolbar-highlight-fg: var(--theme-highlight-fg);
+    --theme-font-family: Helvetica, sans-serif;
+    --theme-dialog-border: #555;
+
+    background-color: var(--theme-bg);
+    color: var(--theme-fg);
+    font-family: var(--theme-font-family);
+    font-size: 14px;
+}
+
+.theme-opm {
+    --theme-highlight-bg: #c62a2a;
+    --theme-toolbar-highlight-bg: #c62a2a;
+    --theme-highlight-hover-bg: hsl(0, 65%, 57%);
+    --theme-highlight-text: hsl(0, 100%, 66%);
+}
+
+.theme-sd1 {
+    --theme-highlight-bg: #2ea217;
+    --theme-toolbar-highlight-bg: #2ea217;
+    --theme-highlight-hover-bg: hsl(110, 75%, 26%);
+    --theme-highlight-text: hsl(110, 75%, 38%);
+}
+
+.ui-element--enabled,
+.ui-element--disabled {
+    transition-property: opacity;
+    transition-duration: 0.3s;
+}
+.ui-element--disabled {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+a {
+    color: var(--theme-highlight-text);
+}

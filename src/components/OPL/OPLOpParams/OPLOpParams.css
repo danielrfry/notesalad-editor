@@ -1,0 +1,7 @@
+.opl-op-editor {
+    min-width: 180px;
+    margin-left: 30px;
+}
+.opl-op-editor__waves:first-child {
+    margin-bottom: 2px;
+}

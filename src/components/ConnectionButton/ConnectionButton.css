@@ -1,0 +1,8 @@
+.conn-button {
+    padding: 15px;
+    height: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}

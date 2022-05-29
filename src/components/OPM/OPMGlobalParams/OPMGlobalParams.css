@@ -1,0 +1,9 @@
+.opm-patch-params {
+    width: 150px;
+    flex-grow: initial;
+    display: flex;
+    flex-direction: column;
+}
+.opm-patch-params__connection {
+    flex-grow: 1;
+}

@@ -1,0 +1,10 @@
+{
+    "ymfm": {
+        "licenseFile": "ymfm.txt",
+        "url": "https://github.com/aaronsgiles/ymfm/"
+    },
+    "Speex Resampler": {
+        "licenseFile": "speex-resampler.txt",
+        "url": "https://www.speex.org/"
+    }
+}

@@ -1,0 +1,7 @@
+.opl-patch-params {
+    flex-grow: initial;
+    width: 150px;
+}
+.opl-patch-params__ops-enabled-row {
+    margin-bottom: 1px;
+}

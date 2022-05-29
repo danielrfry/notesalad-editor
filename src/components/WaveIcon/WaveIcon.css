@@ -1,0 +1,9 @@
+.wave-icon {
+    width: 32px;
+    height: 19px;
+}
+.wave-icon path {
+    stroke: currentColor;
+    stroke-width: 1px;
+    fill: none;
+}

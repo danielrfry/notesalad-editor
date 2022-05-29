@@ -1,0 +1,25 @@
+.knob {
+    position: relative;
+    cursor: default;
+    user-select: none;
+    overflow: hidden;
+}
+.knob__number {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    font-weight: 300;
+    font-size: 18px;
+}
+.knob__track {
+    stroke: var(--theme-fg);
+    stroke-width: 1px;
+    stroke-opacity: 0.5;
+    fill: none;
+}
+.knob__indicator {
+    stroke: var(--theme-highlight-bg);
+    stroke-width: 4px;
+    fill: none;
+}

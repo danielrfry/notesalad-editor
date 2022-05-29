@@ -1,0 +1,14 @@
+.columns-layout {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.columns-layout--stretch-h > * {
+    flex-grow: 1;
+}
+
+.columns-layout--stretch-v {
+    align-items: stretch;
+    height: 100%;
+}

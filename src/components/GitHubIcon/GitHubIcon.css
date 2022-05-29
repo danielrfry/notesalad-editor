@@ -1,0 +1,9 @@
+.gitHubIcon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    margin-right: 8px;
+}
+.gitHubIcon path {
+    fill: var(--theme-highlight-text);
+}

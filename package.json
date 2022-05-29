@@ -1,0 +1,60 @@
+{
+    "name": "notesalad-editor",
+    "version": "0.1.0",
+    "private": true,
+    "license": "BSD-3-Clause",
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.27",
+        "@fortawesome/free-regular-svg-icons": "^5.15.4",
+        "@fortawesome/free-solid-svg-icons": "^5.12.1",
+        "@fortawesome/react-fontawesome": "^0.1.8",
+        "@headlessui/react": "^1.6.0",
+        "@popperjs/core": "^2.11.0",
+        "@reduxjs/toolkit": "^1.7.1",
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "async-lock": "^1.3.1",
+        "audioworklet-polyfill": "^1.1.2",
+        "classnames": "^2.2.6",
+        "event-target-shim": "^5.0.1",
+        "immer": "^9.0.7",
+        "lodash": "^4.17.21",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "react-popper": "^2.2.5",
+        "react-redux": "^7.2.6",
+        "react-scripts": "^5.0.0",
+        "react-transition-group": "^4.4.2",
+        "redux": "^4.1.0"
+    },
+    "scripts": {
+        "format-licences": "npx license-checker --json --production | node scripts/formatlicences.mjs > public/3rdpartylicences.html",
+        "prebuild": "npm run format-licences && mkdir -p public/static/js && cp node_modules/notesalad/dist/libnotesalad.js public/static/js/",
+        "start": "npm run prebuild && react-scripts start",
+        "build": "npm run prebuild && react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "homepage": "https://www.danfry.uk/notesalad/",
+    "devDependencies": {
+        "marked": "^4.0.16",
+        "prettier": "^1.19.1",
+        "sanitize-html": "^2.7.0"
+    }
+}

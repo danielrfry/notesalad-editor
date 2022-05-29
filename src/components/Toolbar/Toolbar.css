@@ -1,0 +1,11 @@
+.toolbar {
+    display: flex;
+    align-items: stretch;
+    background-color: var(--theme-toolbar-bg);
+    overflow: hidden;
+    column-gap: 1px;
+}
+
+.toolbar__item {
+    padding: 15px 20px;
+}

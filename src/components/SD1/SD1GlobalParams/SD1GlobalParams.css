@@ -1,0 +1,7 @@
+.sd1-patch-params {
+    width: 150px;
+    flex-grow: initial;
+}
+.sd1-patch-params__ops-enabled-row {
+    margin-bottom: 1px;
+}

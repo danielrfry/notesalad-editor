@@ -1,0 +1,12 @@
+.keyboard__scroll-container {
+    overflow: scroll;
+    scrollbar-width: none;
+    width: 85px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+.keyboard__scroll-container::-webkit-scrollbar {
+    display: none;
+}

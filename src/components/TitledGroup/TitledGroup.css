@@ -1,0 +1,18 @@
+.titled-group--with-margin {
+    margin-bottom: 20px;
+}
+.titled-group__title {
+    font-size: 12px;
+    width: 100%;
+    border-bottom: 1px solid var(--theme-fg);
+    margin-bottom: 2px;
+    user-select: none;
+}
+.titled-group--fill-v {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.titled-group--fill-v .titled-group__contents {
+    flex-grow: 1;
+}

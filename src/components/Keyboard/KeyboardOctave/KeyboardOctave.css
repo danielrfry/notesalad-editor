@@ -1,0 +1,38 @@
+.keyboard-octave {
+    margin-bottom: -1px;
+}
+.keyboard-octave--highlighted {
+    border-right: 4px solid var(--theme-highlight-bg);
+}
+.keyboard-octave__keys {
+    display: block;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin: round;
+    stroke-miterlimit: 1.5;
+    user-select: none;
+    width: 80px;
+}
+.keyboard-octave__key-black {
+    fill: black;
+    stroke: black;
+    stroke-width: 1px;
+}
+.keyboard-octave__key-black--active {
+    fill: var(--theme-highlight-bg);
+}
+.keyboard-octave__key-white {
+    fill: white;
+    stroke: black;
+    stroke-width: 1px;
+}
+.keyboard-octave__key-white--active {
+    fill: var(--theme-highlight-bg);
+}
+.keyboard-octave__key-label {
+    font-weight: 500;
+    font-size: 12px;
+}
+.keyboard-octave__key-label--active {
+    fill: var(--theme-highlight-fg);
+}

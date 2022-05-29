@@ -1,0 +1,44 @@
+.sysExData {
+    display: flex;
+    align-items: stretch;
+    column-gap: 1px;
+}
+.sysExData__text {
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-grow: 1;
+    padding: 10px;
+    white-space: nowrap;
+    font-family: monospace;
+    background-color: var(--theme-secondary-bg);
+}
+.sysExData__text > div {
+    position: absolute;
+    vertical-align: middle;
+    height: 100%;
+}
+.sysExData__text::-webkit-scrollbar {
+    display: none;
+}
+.sysExData__copyButton {
+    position: relative;
+    padding: 10px 12px;
+}
+.sysExData__successIndicator {
+    position: absolute;
+    inset: 0;
+    background-color: var(--theme-highlight-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+.sysExData__successIndicator--leave {
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: 0.1s;
+}
+.sysExData__successIndicator--leaveTo {
+    opacity: 0;
+}
