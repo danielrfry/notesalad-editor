@@ -53,6 +53,7 @@
     },
     "homepage": "https://www.danfry.uk/notesalad/",
     "devDependencies": {
+        "license-checker": "^25.0.1",
         "marked": "^4.0.16",
         "prettier": "^1.19.1",
         "sanitize-html": "^2.7.0"
