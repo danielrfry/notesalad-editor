@@ -46,6 +46,7 @@ jobs:
           path: notesalad-editor/build/
   publish:
     name: Publish
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - name: Check out base revision
