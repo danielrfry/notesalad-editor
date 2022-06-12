@@ -25,7 +25,7 @@ Next, in the **Note Salad Editor** repository:
 
 ```
 npm install
-npm link notesalad
+npm link @danielrfry/notesalad
 ```
 
 Start the development server:
