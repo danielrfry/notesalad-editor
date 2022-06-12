@@ -37,6 +37,8 @@ jobs:
       - name: Build notesalad-editor
         run: npm install && npm link @danielrfry/notesalad && npm run build
         working-directory: notesalad-editor
+        env:
+          PUBLIC_URL: /notesalad-editor
       - name: Archive build products
         uses: actions/upload-artifact@v3
         with:
