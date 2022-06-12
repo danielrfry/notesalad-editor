@@ -60,7 +60,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: notesalad-editor
-          path: notesalad-editor
       - name: Set Git identity
         run: git config user.name 'GitHub Actions workflow' && git config user.email ''
       - name: Add files to repository and commit
