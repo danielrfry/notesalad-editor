@@ -1,0 +1,39 @@
+name: Build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+  steps:
+    - name: Check out notesalad-editor
+      uses: actions/checkout@v3
+      with:
+        path: notesalad-editor
+    - name: Check out notesalad
+      uses: actions/checkout@v3
+      with:
+        repository: danielrfry/notesalad
+        submodules: recursive
+        path: notesalad
+    - name: Check out emsdk
+      uses: actions/checkout@v3
+      with:
+        repository: emscripten-core/emsdk
+        path: emsdk
+    - name: Install latest emsdk
+      run: cd emsdk && ./emsdk install latest
+    - name: Activate latest emsdk
+      run: cd emsdk && ./emsdk activate latest
+    - name: Build notesalad
+      run: source emsdk/emsdk_env.sh && cd notesalad/web && npm install && npm run build
+    - name: Link notesalad
+      run: cd notesalad/web && npm link
+    - name: Build notesalad-editor
+      run: cd notesalad-editor && npm install && npm link @danielrfry/notesalad && npm run build
+    - name: Archive build products
+      uses: actions/upload-artifact@v3
+      with:
+        name: notesalad-editor
+        path: notesalad-editor/build/
