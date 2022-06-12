@@ -44,3 +44,22 @@ jobs:
         with:
           name: notesalad-editor
           path: notesalad-editor/build/
+  publish:
+    name: Publish
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out base revision
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages-base
+      - name: Create new gh-pages branch
+        run: git branch -f gh-pages-test
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: notesalad-editor
+          path: notesalad-editor
+      - name: Add files to repository and commit
+        run: git add notesalad-editor && git commit -m "Add build from rev ${{ github.sha }}"
+      - name: Push branch
+        run: git push --force gh-pages-test
