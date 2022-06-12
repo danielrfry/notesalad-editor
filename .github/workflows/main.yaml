@@ -61,6 +61,6 @@ jobs:
           name: notesalad-editor
           path: notesalad-editor
       - name: Add files to repository and commit
-        run: git add notesalad-editor && git commit -m "Add build from rev ${{ github.sha }}"
+        run: git add notesalad-editor && git commit --author 'GitHub Actions workflow <>' -m "Add build from rev ${{ github.sha }}"
       - name: Push branch
         run: git push --force gh-pages-test
