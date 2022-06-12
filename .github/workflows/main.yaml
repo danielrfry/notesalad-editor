@@ -46,6 +46,7 @@ jobs:
           path: notesalad-editor/build/
   publish:
     name: Publish
+    if: github.repository == 'danielrfry/notesalad-editor' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-20.04
     steps:
@@ -54,7 +55,7 @@ jobs:
         with:
           ref: gh-pages-base
       - name: Create new gh-pages branch
-        run: git branch -f gh-pages-test && git checkout gh-pages-test
+        run: git branch -f gh-pages && git checkout gh-pages
       - name: Download build
         uses: actions/download-artifact@v3
         with:
@@ -65,4 +66,4 @@ jobs:
       - name: Add files to repository and commit
         run: git add notesalad-editor && git commit -m "Add build from rev ${{ github.sha }}"
       - name: Push branch
-        run: git push --force --set-upstream origin gh-pages-test
+        run: git push --force --set-upstream origin gh-pages
