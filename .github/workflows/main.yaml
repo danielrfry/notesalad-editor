@@ -63,6 +63,6 @@ jobs:
       - name: Set Git identity
         run: git config user.name 'GitHub Actions workflow' && git config user.email ''
       - name: Add files to repository and commit
-        run: git add notesalad-editor && git commit -m "Add build from rev ${{ github.sha }}"
+        run: git add . && git commit -m "Add build from rev ${{ github.sha }}"
       - name: Push branch
         run: git push --force --set-upstream origin gh-pages
