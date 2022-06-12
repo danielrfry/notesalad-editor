@@ -23,15 +23,20 @@ jobs:
           repository: emscripten-core/emsdk
           path: emsdk
       - name: Install latest emsdk
-        run: cd emsdk && ./emsdk install latest
+        run: ./emsdk install latest
+        working-directory: emsdk
       - name: Activate latest emsdk
-        run: cd emsdk && ./emsdk activate latest
+        run: ./emsdk activate latest
+        working-directory: emsdk
       - name: Build notesalad
-        run: source emsdk/emsdk_env.sh && cd notesalad/web && npm install && npm run build
+        run: source ../../emsdk/emsdk_env.sh && npm install && npm run build
+        working-directory: notesalad/web
       - name: Link notesalad
-        run: cd notesalad/web && npm link
+        run: npm link
+        working-directory: notesalad/web
       - name: Build notesalad-editor
-        run: cd notesalad-editor && npm install && npm link @danielrfry/notesalad && npm run build
+        run: npm install && npm link @danielrfry/notesalad && npm run build
+        working-directory: notesalad-editor
       - name: Archive build products
         uses: actions/upload-artifact@v3
         with:
