@@ -1,6 +1,6 @@
 import AsyncLock from 'async-lock/lib';
 import EventTarget from 'event-target-shim';
-import { initAudioContext } from 'notesalad';
+import { initAudioContext } from '@danielrfry/notesalad';
 import { createAudioContext } from '../audioUtils';
 
 export const EMULATOR_STATE_CLOSED = 'closed';

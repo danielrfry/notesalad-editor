@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import UniversalPatchSchema from '../Universal/UniversalPatchSchema';
-import { PARAMS_SD1 } from 'notesalad';
+import { PARAMS_SD1 } from '@danielrfry/notesalad';
 
 const formatMulti = multi => {
     if (multi <= 0) {
