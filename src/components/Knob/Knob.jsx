@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import './Knob.css';
 import Centre from '../Centre/Centre';
-import { useDrag, useTouchDrag } from '../../hooks/drag';
+import useDrag from '../../hooks/drag';
 
 const ANGLE_START = -135;
 const ANGLE_END = 135;
@@ -69,12 +69,10 @@ const Knob = props => {
         [onValueChange, min, max, fineAdjust]
     );
 
-    const mouseDown = useDrag(handleDragMove, clampedValue);
-
     const displayText = formatter ? formatter(clampedValue) : clampedValue;
 
     return (
-        <div className="knob" onMouseDownCapture={mouseDown} {...useTouchDrag(handleDragMove, clampedValue)}>
+        <div className="knob" {...useDrag(handleDragMove, clampedValue)}>
             <Centre>
                 <div className="knob__number" style={{ height: `${size}px` }}>
                     <Centre>{displayText}</Centre>

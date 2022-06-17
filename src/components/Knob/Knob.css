@@ -3,7 +3,7 @@
     cursor: default;
     user-select: none;
     overflow: hidden;
-    touch-action: none;
+    touch-action: pinch-zoom;
 }
 .knob__number {
     position: absolute;
