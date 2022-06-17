@@ -18,6 +18,7 @@ class Keyboard extends React.Component {
         this.state = { activeNote: undefined, keyboardOctave: 3 };
         this.selectedNote = undefined;
         this.octaveRefs = _.times(NUM_OCTAVES, () => React.createRef());
+        this._pointerId = undefined;
     }
 
     componentDidMount = () => {
@@ -34,45 +35,29 @@ class Keyboard extends React.Component {
         this.removeDragListeners();
     };
 
-    handleMouseDown = e => {
-        if (e.button === 0) {
+    handlePointerDown = e => {
+        if (this._pointerId === undefined) {
             e.preventDefault();
-            this.addDragListeners();
+            this._pointerId = e.pointerId;
+            e.currentTarget.setPointerCapture(e.pointerId);
             this.selectNoteAtLocation(e.clientX, e.clientY);
         }
     };
 
-    handleMouseMove = e => {
-        if (e.buttons & 1) {
+    handlePointerMove = e => {
+        if (e.pointerId === this._pointerId) {
             e.preventDefault();
             this.selectNoteAtLocation(e.clientX, e.clientY);
         }
     };
 
-    handleMouseUp = e => {
-        if (e.button === 0) {
+    handlePointerUp = e => {
+        if (e.pointerId === this._pointerId) {
             e.preventDefault();
-            this.removeDragListeners();
             this.selectNote(undefined);
+            this._pointerId = undefined;
+            e.currentTarget.releasePointerCapture(e.pointerId);
         }
-    };
-
-    addDragListeners = () => {
-        document.addEventListener('mousemove', this.handleMouseMove, {
-            capture: true,
-        });
-        document.addEventListener('mouseup', this.handleMouseUp, {
-            capture: true,
-        });
-    };
-
-    removeDragListeners = () => {
-        document.removeEventListener('mousemove', this.handleMouseMove, {
-            capture: true,
-        });
-        document.removeEventListener('mouseup', this.handleMouseUp, {
-            capture: true,
-        });
     };
 
     selectNote = noteNum => {
@@ -161,7 +146,9 @@ class Keyboard extends React.Component {
                         'ui-element--enabled': enabled,
                         'ui-element--disabled': !enabled,
                     })}
-                    onMouseDownCapture={this.handleMouseDown}
+                    onPointerDown={this.handlePointerDown}
+                    onPointerMove={this.handlePointerMove}
+                    onPointerUp={this.handlePointerUp}
                 >
                     {octaves}
                 </div>

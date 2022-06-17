@@ -10,3 +10,6 @@
 .keyboard__scroll-container::-webkit-scrollbar {
     display: none;
 }
+.keyboard__keyboard {
+    touch-action: none;
+}
