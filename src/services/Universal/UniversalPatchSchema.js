@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { PARAMS_UNIVERSAL } from 'notesalad';
+import { PARAMS_UNIVERSAL } from '@danielrfry/notesalad';
 import PatchSchema from '../PatchSchema';
 
 export const NUM_PARAM_MAPS = 4;

@@ -1,0 +1,68 @@
+name: Build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out notesalad-editor
+        uses: actions/checkout@v3
+        with:
+          path: notesalad-editor
+      - name: Check out notesalad
+        uses: actions/checkout@v3
+        with:
+          repository: danielrfry/notesalad
+          submodules: recursive
+          path: notesalad
+      - name: Check out emsdk
+        uses: actions/checkout@v3
+        with:
+          repository: emscripten-core/emsdk
+          path: emsdk
+      - name: Install latest emsdk
+        run: ./emsdk install latest
+        working-directory: emsdk
+      - name: Activate latest emsdk
+        run: ./emsdk activate latest
+        working-directory: emsdk
+      - name: Build notesalad
+        run: source ../../emsdk/emsdk_env.sh && npm install && npm run build
+        working-directory: notesalad/web
+      - name: Link notesalad
+        run: npm link
+        working-directory: notesalad/web
+      - name: Build notesalad-editor
+        run: npm install && npm link @danielrfry/notesalad && npm run build
+        working-directory: notesalad-editor
+        env:
+          PUBLIC_URL: /notesalad-editor
+      - name: Archive build products
+        uses: actions/upload-artifact@v3
+        with:
+          name: notesalad-editor
+          path: notesalad-editor/build/
+  publish:
+    name: Publish
+    if: github.repository == 'danielrfry/notesalad-editor' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out base revision
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages-base
+      - name: Create new gh-pages branch
+        run: git branch -f gh-pages && git checkout gh-pages
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: notesalad-editor
+      - name: Set Git identity
+        run: git config user.name 'GitHub Actions workflow' && git config user.email ''
+      - name: Add files to repository and commit
+        run: git add . && git commit -m "Add build from rev ${{ github.sha }}"
+      - name: Push branch
+        run: git push --force --set-upstream origin gh-pages
