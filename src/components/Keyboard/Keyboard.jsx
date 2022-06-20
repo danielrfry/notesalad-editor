@@ -15,10 +15,9 @@ class Keyboard extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { activeNote: undefined, keyboardOctave: 3 };
-        this.selectedNote = undefined;
+        this.state = { keyboardOctave: 3 };
+        this.selectedNotes = {};
         this.octaveRefs = _.times(NUM_OCTAVES, () => React.createRef());
-        this._pointerId = undefined;
     }
 
     componentDidMount = () => {
@@ -31,63 +30,56 @@ class Keyboard extends React.Component {
         }
     };
 
-    componentWillUnmount = () => {
-        this.removeDragListeners();
-    };
-
     handlePointerDown = e => {
-        if (this._pointerId === undefined) {
-            e.preventDefault();
-            this._pointerId = e.pointerId;
-            e.currentTarget.setPointerCapture(e.pointerId);
-            this.selectNoteAtLocation(e.clientX, e.clientY);
-        }
+        e.preventDefault();
+        const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
+        this.selectNote(noteAtPointer, e.pointerId);
     };
 
     handlePointerMove = e => {
-        if (e.pointerId === this._pointerId) {
+        if (e.pointerId in this.selectedNotes) {
             e.preventDefault();
-            this.selectNoteAtLocation(e.clientX, e.clientY);
+            const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
+            this.selectNote(noteAtPointer, e.pointerId);
         }
     };
 
     handlePointerUp = e => {
-        if (e.pointerId === this._pointerId) {
+        if (e.pointerId in this.selectedNotes) {
             e.preventDefault();
-            this.selectNote(undefined);
-            this._pointerId = undefined;
-            e.currentTarget.releasePointerCapture(e.pointerId);
+            this.selectNote(undefined, e.pointerId);
         }
     };
 
-    selectNote = noteNum => {
+    selectNote = (noteNum, pointerId) => {
         if (noteNum < 0 || noteNum > 127) {
             noteNum = undefined;
         }
 
-        if (this.selectedNote !== noteNum) {
+        const selNote = this.selectedNotes[pointerId];
+        if (selNote !== noteNum) {
             const { onNoteOff, onNoteOn } = this.props;
-            if (this.selectedNote !== undefined) {
-                onNoteOff(this.selectedNote);
+            if (selNote !== undefined && selNote !== null) {
+                onNoteOff(selNote);
             }
-            this.selectedNote = noteNum;
-            if (this.selectedNote !== undefined) {
-                onNoteOn(this.selectedNote);
+            if (noteNum === undefined) {
+                delete this.selectedNotes[pointerId];
+            } else {
+                this.selectedNotes[pointerId] = noteNum;
+            }
+            if (noteNum !== undefined && noteNum !== null) {
+                onNoteOn(noteNum);
             }
         }
     };
 
-    selectNoteAtLocation = (x, y) => {
+    getNoteAtLocation = (x, y) => {
         const el = document.elementFromPoint(x, y);
         if (el) {
             const noteNum = el.dataset.notenum;
-            if (noteNum === undefined) {
-                this.selectNote(undefined);
-            } else {
-                this.selectNote(parseInt(noteNum));
-            }
+            return noteNum === undefined ? null : parseInt(noteNum);
         } else {
-            this.selectNote(undefined);
+            return null;
         }
     };
 
