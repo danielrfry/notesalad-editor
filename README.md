@@ -10,8 +10,6 @@ Note Salad Editor includes OPL and OPM emulators from [ymfm](https://github.com/
 
 I use Chrome for development, test regularly in Firefox, and occasionally in Safari and Edge. Basic functionality should work in recent versions of all the major browsers, but audio latency is likely to be better in browsers that support [Audio Worklet](https://caniuse.com/mdn-api_audioworklet), and MIDI input/output requires [Web MIDI](https://caniuse.com/midi) support.
 
-Please note that many UI controls currently respond only to mouse events and are therefore not usable on touchscreen devices.
-
 ## Building and running locally
 
 First, clone and build [Note Salad](https://github.com/danielrfry/notesalad), following the instructions under _Building libnotesalad for web_. Once built, link it with the following commands in the **Note Salad** repository:
