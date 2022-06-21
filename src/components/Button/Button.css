@@ -5,6 +5,10 @@
     text-align: center;
     user-select: none;
     font-size: 16px;
+    border: none;
+    background-color: transparent;
+    appearance: none;
+    margin: 0;
 }
 .button--highlighted,
 .button.button--secondary.button--highlighted {

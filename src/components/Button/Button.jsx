@@ -17,7 +17,7 @@ const Button = React.forwardRef(
         },
         ref
     ) => (
-        <div
+        <button
             ref={ref}
             className={classNames('button', extraClasses, {
                 'button--secondary': secondary,
@@ -29,7 +29,7 @@ const Button = React.forwardRef(
             onClick={onClick}
         >
             {children}
-        </div>
+        </button>
     )
 );
 Button.defaultProps = {

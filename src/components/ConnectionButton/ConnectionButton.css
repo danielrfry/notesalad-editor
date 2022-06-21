@@ -1,8 +1,10 @@
 .conn-button {
     padding: 15px;
-    height: 49px;
+    height: 79px;
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
+    width: 100%;
+    box-sizing: border-box;
 }
