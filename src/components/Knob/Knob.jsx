@@ -49,7 +49,15 @@ const getLinearDragValue = (dY, min, max) => {
 };
 
 const Knob = props => {
-    const { min, max, value, formatter, onValueChange, size } = props;
+    const {
+        min,
+        max,
+        value,
+        formatter,
+        onValueChange,
+        size,
+        stepValue,
+    } = props;
     const clampedValue = Math.max(min, Math.min(value, max));
     const normalisedValue = (clampedValue - min) / (max - min);
     const end = normalisedValue * (ANGLE_END - ANGLE_START) + ANGLE_START;
@@ -69,10 +77,29 @@ const Knob = props => {
         [onValueChange, min, max, fineAdjust]
     );
 
+    const handleKeyDown = useCallback(
+        e => {
+            const { key } = e;
+            if (key === 'ArrowUp') {
+                e.preventDefault();
+                onValueChange(clampedValue + stepValue);
+            } else if (key === 'ArrowDown') {
+                e.preventDefault();
+                onValueChange(clampedValue - stepValue);
+            }
+        },
+        [onValueChange, clampedValue, stepValue]
+    );
+
     const displayText = formatter ? formatter(clampedValue) : clampedValue;
 
     return (
-        <div className="knob" {...useDrag(handleDragMove, clampedValue)}>
+        <div
+            className="knob"
+            {...useDrag(handleDragMove, clampedValue)}
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
+        >
             <Centre>
                 <div className="knob__number" style={{ height: `${size}px` }}>
                     <Centre>{displayText}</Centre>
@@ -99,6 +126,6 @@ const Knob = props => {
         </div>
     );
 };
-Knob.defaultProps = { size: 80 };
+Knob.defaultProps = { size: 80, stepValue: 1 };
 
 export default Knob;
