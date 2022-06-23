@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { usePopper } from 'react-popper';
 import { Popover, Transition } from '@headlessui/react';
 
-import './MenuButton.css';
+import './CustomMenuButton.css';
 
 const MenuButton = ({ children }) => {
     const [referenceElement, setReferenceElement] = useState(null);
@@ -15,7 +15,7 @@ const MenuButton = ({ children }) => {
     });
 
     return (
-        <Popover className="menu-button">
+        <Popover className="custom-menu-button">
             {({ open }) => (
                 <>
                     <Popover.Button
@@ -30,15 +30,15 @@ const MenuButton = ({ children }) => {
                         ref={setPopperElement}
                         style={styles.popper}
                         {...attributes.popper}
-                        className="menu-button__popover"
+                        className="custom-menu-button__popover"
                     >
                         <Transition
-                            enter="menu-button__popover--transition"
-                            enterFrom="menu-button__popover--closed"
-                            enterTo="menu-button__popover--open"
-                            leave="menu-button__popover--transition"
-                            leaveFrom="menu-button__popover--open"
-                            leaveTo="menu-button__popover--closed"
+                            enter="custom-menu-button__popover--transition"
+                            enterFrom="custom-menu-button__popover--closed"
+                            enterTo="custom-menu-button__popover--open"
+                            leave="custom-menu-button__popover--transition"
+                            leaveFrom="custom-menu-button__popover--open"
+                            leaveTo="custom-menu-button__popover--closed"
                         >
                             <Popover.Panel>{children}</Popover.Panel>
                         </Transition>

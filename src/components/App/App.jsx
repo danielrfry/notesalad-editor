@@ -1,7 +1,7 @@
 import React from 'react';
 import AppMenuContainer from '../AppMenuContainer/AppMenuContainer';
 import KeyboardEditor from '../KeyboardEditor/KeyboardEditor';
-import MenuButton from '../MenuButton/MenuButton';
+import CustomMenuButton from '../CustomMenuButton/CustomMenuButton';
 import { MIDIOutputServiceContext } from '../MIDI/MIDIOutputServiceProvider/MIDIOutputServiceProvider';
 import Toolbar, { ToolbarItem } from '../Toolbar/Toolbar';
 import OPLEditor from '../OPL/OPLEditor/OPLEditor';
@@ -51,9 +51,9 @@ const App = ({
             <Theme themeClass={getCSSThemeForMode(mode)} />
             <div className="app__toolbar">
                 <Toolbar>
-                    <MenuButton>
+                    <CustomMenuButton>
                         <AppMenuContainer appController={appController} />
-                    </MenuButton>
+                    </CustomMenuButton>
                     <ToolbarItem
                         highlighted={mode === Modes.OPL}
                         onClick={() => onSelectMode(Modes.OPL)}

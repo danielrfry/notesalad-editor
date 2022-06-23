@@ -1,22 +1,22 @@
-.menu-button {
+.custom-menu-button {
     display: inline-block;
 }
 
-.menu-button__popover {
+.custom-menu-button__popover {
     z-index: 100;
     overflow: hidden;
 }
 
-.menu-button__popover--transition {
+.custom-menu-button__popover--transition {
     transition-property: transform;
     transition-duration: 0.2s;
     transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.menu-button__popover--open {
+.custom-menu-button__popover--open {
     transform: translateY(0);
 }
 
-.menu-button__popover--closed {
+.custom-menu-button__popover--closed {
     transform: translateY(-100%);
 }

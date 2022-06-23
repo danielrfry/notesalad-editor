@@ -1,10 +1,10 @@
-.menu {
+.custom-menu {
     background-color: var(--theme-secondary-bg);
     color: var(--theme-secondary-fg);
     min-width: 240px;
 }
 
-.menu-item {
+.custom-menu-item {
     font-size: 15px;
     position: relative;
     line-height: 50px;
@@ -12,11 +12,11 @@
     cursor: pointer;
 }
 
-.menu-item:hover {
+.custom-menu-item:hover {
     background-color: var(--theme-secondary-hover-bg);
 }
 
-.menu-item__icon {
+.custom-menu-item__icon {
     position: absolute;
     left: 0;
     top: 0;
@@ -27,7 +27,7 @@
     margin-right: 10px;
 }
 
-.menu-item__content {
+.custom-menu-item__content {
     padding-left: 54px;
     padding-right: 16px;
     letter-spacing: -0.02em;

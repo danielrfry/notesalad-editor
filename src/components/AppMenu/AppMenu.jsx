@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu, { MenuItem } from '../Menu/Menu';
+import CustomMenu, { CustomMenuItem } from '../CustomMenu/CustomMenu';
 import {
     faCog,
     faShare,
@@ -8,23 +8,23 @@ import {
 import { faFolderOpen, faSave } from '@fortawesome/free-regular-svg-icons';
 
 const AppMenu = props => (
-    <Menu>
-        <MenuItem icon={faFolderOpen} onClick={props.onOpenPatchClick}>
+    <CustomMenu>
+        <CustomMenuItem icon={faFolderOpen} onClick={props.onOpenPatchClick}>
             Open patch
-        </MenuItem>
-        <MenuItem icon={faSave} onClick={props.onSavePatchClick}>
+        </CustomMenuItem>
+        <CustomMenuItem icon={faSave} onClick={props.onSavePatchClick}>
             Save patch
-        </MenuItem>
-        <MenuItem icon={faShare} onClick={props.onExportSysExClick}>
+        </CustomMenuItem>
+        <CustomMenuItem icon={faShare} onClick={props.onExportSysExClick}>
             Export as SysEx
-        </MenuItem>
-        <MenuItem icon={faCog} onClick={props.onSettingsClick}>
+        </CustomMenuItem>
+        <CustomMenuItem icon={faCog} onClick={props.onSettingsClick}>
             Settings
-        </MenuItem>
-        <MenuItem icon={faQuestionCircle} onClick={props.onAboutClick}>
+        </CustomMenuItem>
+        <CustomMenuItem icon={faQuestionCircle} onClick={props.onAboutClick}>
             About
-        </MenuItem>
-    </Menu>
+        </CustomMenuItem>
+    </CustomMenu>
 );
 
 export default AppMenu;
