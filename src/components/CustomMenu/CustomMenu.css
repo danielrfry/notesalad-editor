@@ -10,6 +10,13 @@
     line-height: 50px;
     user-select: none;
     cursor: pointer;
+    display: block;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    width: 100%;
+    text-align: left;
 }
 
 .custom-menu-item:hover {

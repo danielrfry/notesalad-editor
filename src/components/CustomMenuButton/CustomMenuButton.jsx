@@ -21,7 +21,7 @@ const MenuButton = ({ children }) => {
                     <Popover.Button
                         as={ToolbarItem}
                         ref={setReferenceElement}
-                        selected={open}
+                        highlighted={open}
                     >
                         <FontAwesomeIcon icon={faBars} />
                     </Popover.Button>

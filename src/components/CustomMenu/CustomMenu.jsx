@@ -11,15 +11,13 @@ const CustomMenu = React.forwardRef((props, ref) => (
 ));
 
 const CustomMenuItem = ({ children, icon, onClick }) => (
-    <Popover.Button as="div" className="custom-menu-item">
-        <div onClick={onClick}>
-            {icon && (
-                <div className="custom-menu-item__icon">
-                    <FontAwesomeIcon icon={icon} />
-                </div>
-            )}
-            <div className="custom-menu-item__content">{children}</div>
-        </div>
+    <Popover.Button as="button" className="custom-menu-item" onClick={onClick}>
+        {icon && (
+            <div className="custom-menu-item__icon">
+                <FontAwesomeIcon icon={icon} />
+            </div>
+        )}
+        <div className="custom-menu-item__content">{children}</div>
     </Popover.Button>
 );
 
