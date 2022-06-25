@@ -125,7 +125,10 @@ class Keyboard extends React.Component {
         }
 
         return (
-            <div className="keyboard__scroll-container">
+            <div
+                className="keyboard__scroll-container"
+                tabIndex={enabled ? 0 : -1}
+            >
                 <MusicalTyping
                     octave={this.state.keyboardOctave}
                     onNoteOn={this.props.onNoteOn}
