@@ -1,9 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { useContext } from 'react';
-import UIGroupEnabledContext, {
-    useGroupEnabledState,
-} from '../UIGroupEnabledContext/UIGroupEnabledContext';
+import { useGroupEnabledState } from '../UIGroupEnabledContext/UIGroupEnabledContext';
 
 import './Button.css';
 
