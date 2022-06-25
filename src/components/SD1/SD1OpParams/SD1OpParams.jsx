@@ -11,6 +11,7 @@ import WaveGrid from '../../WaveGrid/WaveGrid';
 
 import './SD1OpParams.css';
 import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
+import ScrollArea from '../../ScrollArea/ScrollArea';
 
 const WaveButton = props => (
     <ParamButton path={props.path} set={props.shape}>
@@ -105,7 +106,10 @@ const SD1OpEditor = props => {
                     </TitledGroup>
                 </ColumnsLayout>
                 <TitledGroup title="WAVE" withMargin={false}>
-                    <div className="sd1-op-editor__waves">
+                    <ScrollArea
+                        extraClasses={{ 'sd1-op-editor__waves': true }}
+                        scrollV
+                    >
                         <WaveGrid columnCount={4}>
                             <WaveButton path={`${pathBase}.ws`} shape={0} />
                             <WaveButton path={`${pathBase}.ws`} shape={1} />
@@ -136,7 +140,7 @@ const SD1OpEditor = props => {
                             <WaveButton path={`${pathBase}.ws`} shape={29} />
                             <WaveButton path={`${pathBase}.ws`} shape={30} />
                         </WaveGrid>
-                    </div>
+                    </ScrollArea>
                 </TitledGroup>
             </div>
         </UIGroupEnabledContext.Provider>

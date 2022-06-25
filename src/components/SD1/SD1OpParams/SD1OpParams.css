@@ -3,8 +3,7 @@
     margin-left: 30px;
 }
 .sd1-op-editor__waves {
-    overflow: scroll;
-    max-height: 105px;
+    height: 105px;
     scrollbar-width: none;
 }
 .sd1-op-editor__waves::-webkit-scrollbar {

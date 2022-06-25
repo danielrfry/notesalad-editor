@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import './ScrollArea.css';
+import { useGroupEnabledState } from '../UIGroupEnabledContext/UIGroupEnabledContext';
 
 const ScrollArea = ({
     scrollV = false,
@@ -9,17 +10,22 @@ const ScrollArea = ({
     extraStyles,
     extraClasses,
     children,
-}) => (
-    <div
-        className={classNames(
-            'scroll-area',
-            { 'scroll-area--h': scrollH, 'scroll-area--v': scrollV },
-            extraClasses
-        )}
-        style={extraStyles}
-    >
-        <div className="scroll-area__content">{children}</div>
-    </div>
-);
+}) => {
+    const { enabled } = useGroupEnabledState(true);
+
+    return (
+        <div
+            className={classNames(
+                'scroll-area',
+                { 'scroll-area--h': scrollH, 'scroll-area--v': scrollV },
+                extraClasses
+            )}
+            style={extraStyles}
+            tabIndex={enabled ? undefined : -1}
+        >
+            <div className="scroll-area__content">{children}</div>
+        </div>
+    );
+};
 
 export default ScrollArea;
