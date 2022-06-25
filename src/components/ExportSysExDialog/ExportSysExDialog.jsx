@@ -10,6 +10,7 @@ import ChannelDestParams from './ChannelDestParams/ChannelDestParams';
 import { PatchAddressTypes } from '../../types';
 
 import './ExportSysExDialog.css';
+import { useRef } from 'react';
 
 const getDestinationParams = type => {
     switch (type) {
@@ -44,9 +45,15 @@ const ExportSysExDialog = ({
         () => onSetDestination(PatchAddressTypes.DrumProgram),
         [onSetDestination]
     );
+    const closeButtonRef = useRef();
 
     return (
-        <CustomDialog title="Export SysEx" open={open} onClose={onClose}>
+        <CustomDialog
+            title="Export SysEx"
+            open={open}
+            onClose={onClose}
+            initialFocus={closeButtonRef}
+        >
             <TitledGroup title="DESTINATION">
                 <ColumnsLayout
                     stretchH
@@ -95,7 +102,7 @@ const ExportSysExDialog = ({
                 >
                     Save .SYX
                 </CustomDialog.Button>
-                <CustomDialog.Button onClick={onClose}>
+                <CustomDialog.Button onClick={onClose} ref={closeButtonRef}>
                     Close
                 </CustomDialog.Button>
             </CustomDialog.ButtonGroup>
