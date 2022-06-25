@@ -86,15 +86,21 @@ const Knob = props => {
     const handleKeyDown = useCallback(
         e => {
             const { key } = e;
+            let newValue = clampedValue;
             if (key === 'ArrowUp') {
                 e.preventDefault();
-                onValueChange(clampedValue + stepValue);
+                newValue += stepValue;
             } else if (key === 'ArrowDown') {
                 e.preventDefault();
-                onValueChange(clampedValue - stepValue);
+                newValue -= stepValue;
+            }
+            newValue = Math.max(min, Math.min(newValue, max));
+
+            if (newValue !== clampedValue) {
+                onValueChange(newValue);
             }
         },
-        [onValueChange, clampedValue, stepValue]
+        [onValueChange, clampedValue, stepValue, min, max]
     );
 
     const displayText = formatter ? formatter(clampedValue) : clampedValue;
