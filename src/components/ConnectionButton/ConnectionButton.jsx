@@ -4,8 +4,20 @@ import ConnectionImage from '../ConnectionImage/ConnectionImage';
 
 import './ConnectionButton.css';
 
-const ConnectionButton = ({ path, set, ...others }) => (
-    <ParamButton path={path} set={set} extraClasses="conn-button">
+const ConnectionButton = ({
+    path,
+    set,
+    enabled,
+    useDisabledStyles,
+    ...others
+}) => (
+    <ParamButton
+        path={path}
+        set={set}
+        enabled={enabled}
+        useDisabledStyles={useDisabledStyles}
+        extraClasses="conn-button"
+    >
         <ConnectionImage path={path} conn={set} {...others}></ConnectionImage>
     </ParamButton>
 );

@@ -3,7 +3,14 @@ import React, { useCallback } from 'react';
 
 import './DropDownList.css';
 
-const DropDownList = ({ value, onChange, extraClasses, children }) => {
+const DropDownList = ({
+    value,
+    onChange,
+    extraClasses,
+    enabled,
+    tabIndex,
+    children,
+}) => {
     const handleChange = useCallback(
         e => {
             onChange?.(e.target.value);
@@ -16,10 +23,15 @@ const DropDownList = ({ value, onChange, extraClasses, children }) => {
             className={classNames('drop-down-list', extraClasses)}
             value={value}
             onChange={handleChange}
+            disabled={!enabled}
+            tabIndex={tabIndex}
         >
             {children}
         </select>
     );
+};
+DropDownList.defaultProps = {
+    enabled: true,
 };
 
 export const DropDownItem = ({ value, children }) => (

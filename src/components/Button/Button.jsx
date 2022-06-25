@@ -14,6 +14,8 @@ const Button = React.forwardRef(
             onClick,
             children,
             enabled,
+            tabIndex,
+            useDisabledStyles,
         },
         ref
     ) => (
@@ -24,9 +26,11 @@ const Button = React.forwardRef(
                 'button--highlighted': highlighted,
                 'button--small': small,
                 'button--hover': hover,
-                'ui-element--disabled': !enabled,
+                'ui-element--disabled': !enabled && useDisabledStyles,
             })}
             onClick={onClick}
+            tabIndex={tabIndex}
+            disabled={!enabled}
         >
             {children}
         </button>
@@ -34,6 +38,7 @@ const Button = React.forwardRef(
 );
 Button.defaultProps = {
     enabled: true,
+    useDisabledStyles: true,
 };
 
 export default Button;

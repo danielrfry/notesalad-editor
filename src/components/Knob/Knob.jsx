@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import './Knob.css';
 import Centre from '../Centre/Centre';
 import useDrag from '../../hooks/drag';
+import classNames from 'classnames';
 
 const ANGLE_START = -135;
 const ANGLE_END = 135;
@@ -57,6 +58,9 @@ const Knob = props => {
         onValueChange,
         size,
         stepValue,
+        enabled,
+        useDisabledStyles,
+        tabIndex,
     } = props;
     const clampedValue = Math.max(min, Math.min(value, max));
     const normalisedValue = (clampedValue - min) / (max - min);
@@ -95,9 +99,11 @@ const Knob = props => {
 
     return (
         <div
-            className="knob"
+            className={classNames('knob', {
+                'ui-element--disabled': !enabled && useDisabledStyles,
+            })}
             {...useDrag(handleDragMove, clampedValue)}
-            tabIndex={0}
+            tabIndex={enabled ? tabIndex : -1}
             onKeyDown={handleKeyDown}
         >
             <Centre>
@@ -126,6 +132,12 @@ const Knob = props => {
         </div>
     );
 };
-Knob.defaultProps = { size: 80, stepValue: 1 };
+Knob.defaultProps = {
+    enabled: true,
+    size: 80,
+    stepValue: 1,
+    useDisabledStyles: true,
+    tabIndex: 0,
+};
 
 export default Knob;
