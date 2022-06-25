@@ -11,6 +11,7 @@ import { setOPLPatch4Op } from '../../../redux/patchEditorSlice';
 import Button from '../../Button/Button';
 
 import './OPLGlobalParams.css';
+import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 
 class OPLGlobalParams extends React.Component {
     getConnectionButtons = () => {
@@ -55,39 +56,41 @@ class OPLGlobalParams extends React.Component {
         const { enabled, is4Op } = this.props;
 
         return (
-            <div
-                className={classNames('opl-patch-params', {
-                    'ui-element--enabled': enabled,
-                    'ui-element--disabled': !enabled,
-                })}
-            >
-                <ColumnTitle>GLOBAL</ColumnTitle>
-                <div>
-                    <TitledGroup title="CONNECTION">
-                        <ColumnsLayout
-                            stretchH
-                            extraClasses="opl-patch-params__ops-enabled-row"
-                        >
-                            <Button
-                                highlighted={!is4Op}
-                                onClick={this._handle2OpClicked}
+            <UIGroupEnabledContext.Provider value={enabled}>
+                <div
+                    className={classNames('opl-patch-params', {
+                        'ui-element--enabled': enabled,
+                        'ui-element--disabled': !enabled,
+                    })}
+                >
+                    <ColumnTitle>GLOBAL</ColumnTitle>
+                    <div>
+                        <TitledGroup title="CONNECTION">
+                            <ColumnsLayout
+                                stretchH
+                                extraClasses="opl-patch-params__ops-enabled-row"
                             >
-                                2-OP
-                            </Button>
-                            <Button
-                                highlighted={is4Op}
-                                onClick={this._handle4OpClicked}
-                            >
-                                4-OP
-                            </Button>
-                        </ColumnsLayout>
-                        {this.getConnectionButtons()}
+                                <Button
+                                    highlighted={!is4Op}
+                                    onClick={this._handle2OpClicked}
+                                >
+                                    2-OP
+                                </Button>
+                                <Button
+                                    highlighted={is4Op}
+                                    onClick={this._handle4OpClicked}
+                                >
+                                    4-OP
+                                </Button>
+                            </ColumnsLayout>
+                            {this.getConnectionButtons()}
+                        </TitledGroup>
+                    </div>
+                    <TitledGroup title="FEEDBACK" withMargin={false}>
+                        <ParamKnob path={`${Modes.OPL}.fb`} />
                     </TitledGroup>
                 </div>
-                <TitledGroup title="FEEDBACK" withMargin={false}>
-                    <ParamKnob path={`${Modes.OPL}.fb`} />
-                </TitledGroup>
-            </div>
+            </UIGroupEnabledContext.Provider>
         );
     };
 

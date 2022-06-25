@@ -1,5 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useContext } from 'react';
+import UIGroupEnabledContext, {
+    useGroupEnabledState,
+} from '../UIGroupEnabledContext/UIGroupEnabledContext';
 
 import './Button.css';
 
@@ -13,28 +17,33 @@ const Button = React.forwardRef(
             hover,
             onClick,
             children,
-            enabled,
+            enabled: controlEnabled,
             tabIndex,
-            useDisabledStyles,
         },
         ref
-    ) => (
-        <button
-            ref={ref}
-            className={classNames('button', extraClasses, {
-                'button--secondary': secondary,
-                'button--highlighted': highlighted,
-                'button--small': small,
-                'button--hover': hover,
-                'ui-element--disabled': !enabled && useDisabledStyles,
-            })}
-            onClick={onClick}
-            tabIndex={tabIndex}
-            disabled={!enabled}
-        >
-            {children}
-        </button>
-    )
+    ) => {
+        const { enabled, useDisabledStyles } = useGroupEnabledState(
+            controlEnabled
+        );
+
+        return (
+            <button
+                ref={ref}
+                className={classNames('button', extraClasses, {
+                    'button--secondary': secondary,
+                    'button--highlighted': highlighted,
+                    'button--small': small,
+                    'button--hover': hover,
+                    'ui-element--disabled': !enabled && useDisabledStyles,
+                })}
+                onClick={onClick}
+                tabIndex={tabIndex}
+                disabled={!enabled}
+            >
+                {children}
+            </button>
+        );
+    }
 );
 Button.defaultProps = {
     enabled: true,

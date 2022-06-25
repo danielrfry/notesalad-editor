@@ -8,6 +8,7 @@ import ParamKnob from '../../Knob/ParamKnob';
 import { Modes } from '../../../types';
 import { isSD1Patch4Op } from '../../../services/SD1/SD1PatchSchema';
 import Button from '../../Button/Button';
+import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 
 import './SD1GlobalParams.css';
 
@@ -17,42 +18,44 @@ export default class SD1GlobalParams extends React.Component {
         const is4Op = isSD1Patch4Op(patch);
 
         return (
-            <div
-                className={classNames('sd1-patch-params', {
-                    'ui-element--enabled': enabled,
-                    'ui-element--disabled': !enabled,
-                })}
-            >
-                <ColumnTitle>GLOBAL</ColumnTitle>
-                <TitledGroup title="CONNECTION">
-                    <ColumnsLayout
-                        stretchH
-                        extraClasses="sd1-patch-params__ops-enabled-row"
-                    >
-                        <Button
-                            highlighted={!is4Op}
-                            onClick={this._handleSet2OpClicked}
+            <UIGroupEnabledContext.Provider value={enabled}>
+                <div
+                    className={classNames('sd1-patch-params', {
+                        'ui-element--enabled': enabled,
+                        'ui-element--disabled': !enabled,
+                    })}
+                >
+                    <ColumnTitle>GLOBAL</ColumnTitle>
+                    <TitledGroup title="CONNECTION">
+                        <ColumnsLayout
+                            stretchH
+                            extraClasses="sd1-patch-params__ops-enabled-row"
                         >
-                            2-OP
-                        </Button>
-                        <Button
-                            highlighted={is4Op}
-                            onClick={this._handleSet4OpClicked}
-                        >
-                            4-OP
-                        </Button>
+                            <Button
+                                highlighted={!is4Op}
+                                onClick={this._handleSet2OpClicked}
+                            >
+                                2-OP
+                            </Button>
+                            <Button
+                                highlighted={is4Op}
+                                onClick={this._handleSet4OpClicked}
+                            >
+                                4-OP
+                            </Button>
+                        </ColumnsLayout>
+                        {this.getConnectionButtons(is4Op)}
+                    </TitledGroup>
+                    <ColumnsLayout stretchH>
+                        <TitledGroup title="OCTAVE">
+                            <ParamKnob path={`${Modes.SD1}.bo`} size={60} />
+                        </TitledGroup>
+                        <TitledGroup title="LFO FREQ">
+                            <ParamKnob path={`${Modes.SD1}.lfo`} size={60} />
+                        </TitledGroup>
                     </ColumnsLayout>
-                    {this.getConnectionButtons(is4Op)}
-                </TitledGroup>
-                <ColumnsLayout stretchH>
-                    <TitledGroup title="OCTAVE">
-                        <ParamKnob path={`${Modes.SD1}.bo`} size={60} />
-                    </TitledGroup>
-                    <TitledGroup title="LFO FREQ">
-                        <ParamKnob path={`${Modes.SD1}.lfo`} size={60} />
-                    </TitledGroup>
-                </ColumnsLayout>
-            </div>
+                </div>
+            </UIGroupEnabledContext.Provider>
         );
     };
 

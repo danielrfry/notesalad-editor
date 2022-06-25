@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
-import './Knob.css';
 import Centre from '../Centre/Centre';
 import useDrag from '../../hooks/drag';
 import classNames from 'classnames';
+import { useGroupEnabledState } from '../UIGroupEnabledContext/UIGroupEnabledContext';
+
+import './Knob.css';
 
 const ANGLE_START = -135;
 const ANGLE_END = 135;
@@ -58,8 +60,7 @@ const Knob = props => {
         onValueChange,
         size,
         stepValue,
-        enabled,
-        useDisabledStyles,
+        enabled: controlEnabled,
         tabIndex,
     } = props;
     const clampedValue = Math.max(min, Math.min(value, max));
@@ -67,6 +68,7 @@ const Knob = props => {
     const end = normalisedValue * (ANGLE_END - ANGLE_START) + ANGLE_START;
     const height = getHeight(size);
     const fineAdjust = max - min > height;
+    const { enabled, useDisabledStyles } = useGroupEnabledState(controlEnabled);
 
     const handleDragMove = useCallback(
         (startValue, dX, dY) => {
