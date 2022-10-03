@@ -28,11 +28,7 @@ export default class MIDIInputService {
                 return null;
             }
 
-            if (cc >= 16 && cc < 54) {
-                return null;
-            } else {
-                return message;
-            }
+            return message;
         }
 
         return message;
