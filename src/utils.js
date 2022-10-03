@@ -73,11 +73,28 @@ export const arraySliceEquals = (array, slice, startOffset) => {
     return true;
 };
 
-export const downloadBlob = (blob, fileName) => {
-    const objectURL = URL.createObjectURL(blob);
-    setTimeout(() => URL.revokeObjectURL(objectURL), 60000);
-    const aEl = document.createElement('a');
-    aEl.setAttribute('download', fileName);
-    aEl.setAttribute('href', objectURL);
-    aEl.click();
+export const downloadBlob = async (blob, fileName, types) => {
+    if (typeof window.showSaveFilePicker === 'function') {
+        const opts = {
+            suggestedName: fileName,
+            types,
+        };
+        let fileHandle;
+        try {
+            fileHandle = await window.showSaveFilePicker(opts);
+        } catch (e) {
+            if (e.name === 'AbortError') return;
+            throw e;
+        }
+        const writable = await fileHandle.createWritable();
+        writable.write(blob);
+        writable.close();
+    } else {
+        const objectURL = URL.createObjectURL(blob);
+        setTimeout(() => URL.revokeObjectURL(objectURL), 60000);
+        const aEl = document.createElement('a');
+        aEl.setAttribute('download', fileName);
+        aEl.setAttribute('href', objectURL);
+        aEl.click();
+    }
 };

@@ -25,6 +25,11 @@ export default class AppController {
             state.patchEditor.patch[state.patchEditor.mode]
         );
         const patchBlob = new Blob([patchJSON], { type: 'application/json' });
-        downloadBlob(patchBlob, 'patch.json');
+        downloadBlob(patchBlob, 'patch.json', [
+            {
+                description: 'JSON files',
+                accept: { 'application/json': ['.json'] },
+            },
+        ]);
     }
 }

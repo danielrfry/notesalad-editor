@@ -23,7 +23,13 @@ const ExportSysExDialogContainer = ({
                 new Blob([new Uint8Array(sysExData)], {
                     type: 'application/octet-stream',
                 }),
-                'patch.syx'
+                'patch.syx',
+                [
+                    {
+                        description: 'SysEx files',
+                        accept: { 'application/octet-stream': ['.syx'] },
+                    },
+                ]
             ),
         [sysExData]
     );
