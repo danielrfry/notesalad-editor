@@ -38,9 +38,12 @@ const MelodicDestParams = ({ bank, onSetBank, program, onSetProgram }) => (
 const mapStateToProps = state =>
     state.uiState.exportSysExDialog.destinationAddress.melodicProgram;
 const mapDispatchToProps = dispatch => ({
-    onSetBank: bank => dispatch(updateExportSysExDestMelodicProg({ bank })),
+    onSetBank: bank =>
+        dispatch(updateExportSysExDestMelodicProg({ bank: parseInt(bank) })),
     onSetProgram: program =>
-        dispatch(updateExportSysExDestMelodicProg({ program })),
+        dispatch(
+            updateExportSysExDestMelodicProg({ program: parseInt(program) })
+        ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MelodicDestParams);

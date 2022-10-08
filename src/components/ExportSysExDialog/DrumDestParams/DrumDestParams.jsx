@@ -58,11 +58,12 @@ const DrumDestParams = ({
 const mapStateToProps = state =>
     state.uiState.exportSysExDialog.destinationAddress.drumProgram;
 const mapDispatchToProps = dispatch => ({
-    onSetBank: bank => dispatch(updateExportSysExDestDrumProg({ bank })),
+    onSetBank: bank =>
+        dispatch(updateExportSysExDestDrumProg({ bank: parseInt(bank) })),
     onSetProgram: program =>
-        dispatch(updateExportSysExDestDrumProg({ program })),
+        dispatch(updateExportSysExDestDrumProg({ program: parseInt(program) })),
     onSetNoteNum: noteNum =>
-        dispatch(updateExportSysExDestDrumProg({ noteNum })),
+        dispatch(updateExportSysExDestDrumProg({ noteNum: parseInt(noteNum) })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrumDestParams);
