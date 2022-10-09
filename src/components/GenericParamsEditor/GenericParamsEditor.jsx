@@ -36,6 +36,9 @@ const GenericParamsEditor = ({ mode }) => (
                 <TitledGroup title="PITCH OFFSET">
                     <ParamKnob path={`${mode}.pitchOffset`} />
                 </TitledGroup>
+                <TitledGroup title="VELOCITY DEPTH">
+                    <ParamKnob path={`${mode}.velocityDepth`} />
+                </TitledGroup>
             </div>
         </div>
         {_.range(0, NUM_PARAM_MAPS).map(mapNo => (
