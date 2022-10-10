@@ -10,6 +10,7 @@ import { NUM_LFOS } from '../../services/Universal/UniversalPatchSchema';
 
 const paramMapSources = [
     { srcID: 255, text: 'None' },
+    { srcID: 192, text: 'Velocity' },
     ..._.range(0, NUM_LFOS).map(lfo => ({
         srcID: lfo + 128,
         text: `LFO #${lfo + 1}`,
