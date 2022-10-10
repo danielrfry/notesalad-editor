@@ -7,6 +7,12 @@ import ParamDropDownList from '../DropDownList/ParamDropDownList';
 import ParamKnob from '../Knob/ParamKnob';
 import patchSchemaManager from '../../services/PatchSchemaManager';
 import { NUM_LFOS } from '../../services/Universal/UniversalPatchSchema';
+import ColumnsLayout from '../ColumnsLayout/ColumnsLayout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShuffle } from '@fortawesome/free-solid-svg-icons';
+import ParamButton from '../Button/ParamButton';
+
+import './ParamMapEditor.css';
 
 const paramMapSources = [
     { srcID: 255, text: 'None' },
@@ -35,13 +41,24 @@ const ParamMapEditor = ({ mapNo, mode }) => {
         <>
             <ColumnTitle>MAP {mapNo + 1}</ColumnTitle>
             <TitledGroup title="SOURCE">
-                <ParamDropDownList path={`${pathBase}.src`}>
-                    {paramMapSources.map(item => (
-                        <DropDownItem key={item.srcID} value={item.srcID}>
-                            {item.text}
-                        </DropDownItem>
-                    ))}
-                </ParamDropDownList>
+                <ColumnsLayout stretchH stretchV>
+                    <ParamDropDownList path={`${pathBase}.src`}>
+                        {paramMapSources.map(item => (
+                            <DropDownItem key={item.srcID} value={item.srcID}>
+                                {item.text}
+                            </DropDownItem>
+                        ))}
+                    </ParamDropDownList>
+                    <ParamButton
+                        secondary
+                        hover
+                        path={`${pathBase}.invertSrc`}
+                        toggle
+                        extraClasses="parammap-editor__invert-btn"
+                    >
+                        <FontAwesomeIcon icon={faShuffle} />
+                    </ParamButton>
+                </ColumnsLayout>
             </TitledGroup>
             <TitledGroup title="DESTINATION">
                 <ParamDropDownList path={`${pathBase}.dest`}>
