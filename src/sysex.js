@@ -12,6 +12,7 @@ export const SYSEX_CMD_READPATCH = 0x07;
 export const SYSEX_CMD_READPATCH_REPLY = 0x08;
 export const SYSEX_CMD_WRITEPATCH = 0x09;
 export const SYSEX_CMD_WRITEPATCH_REPLY = 0x0a;
+export const SYSEX_CMD_SETDRUMMODE = 0x0b;
 
 export const SYSEX_PATCHADDR_TYPE_CHANNEL = 0x00;
 export const SYSEX_PATCHADDR_TYPE_MELODICPROG = 0x01;
@@ -194,3 +195,10 @@ export const parseWritePatchReply = () => messageData => {
         return undefined;
     }
 };
+
+export const formatSetDrumModeMessage = messageFormatter(
+    (channel, drumMode) => [
+        SYSEX_CMD_SETDRUMMODE,
+        (channel & 0x0f) | (drumMode ? 0x40 : 0),
+    ]
+);
