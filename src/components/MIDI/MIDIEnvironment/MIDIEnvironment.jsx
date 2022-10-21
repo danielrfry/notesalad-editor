@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import MIDIDevTools from '../MIDIDevTools/MIDIDevTools';
 import MIDIInputServiceContainer from '../MIDIInputServiceContainer/MIDIInputServiceContainer';
 import MIDIOutputServiceProvider from '../MIDIOutputServiceProvider/MIDIOutputServiceProvider';
 import MIDIPortConnection from '../MIDIPortConnection/MIDIPortConnection';
@@ -64,6 +65,7 @@ const MIDIEnvironment = ({
                 <MIDIInputServiceContainer
                     controlInputPort={controlInputPort}
                 />
+                <MIDIDevTools />
                 {children}
             </MIDIOutputServiceProvider>
         </>

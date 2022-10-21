@@ -15,6 +15,7 @@ import {
     getChannelAddress,
     formatWritePatchMessage,
     parseWritePatchReply,
+    formatSetDrumModeMessage,
 } from '../sysex';
 import { timeout } from '../utils';
 import patchSchemaManager from './PatchSchemaManager';
@@ -228,4 +229,9 @@ export default class MIDIOutputService {
 
     writeChannelPatch = async (channel, deviceID, patchData) =>
         await this.writePatch(getChannelAddress(channel), deviceID, patchData);
+
+    setChannelDrumMode = (channel, drumMode) => {
+        const msg = formatSetDrumModeMessage(channel, drumMode);
+        this.sendMessage(msg);
+    };
 }
