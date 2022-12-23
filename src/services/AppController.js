@@ -33,4 +33,12 @@ export default class AppController {
             },
         ]);
     }
+
+    async receivePatchClicked() {
+        if (this.midiOutputService) {
+            const patch = await this.midiOutputService.receivePatch();
+            const { mode } = this.store.getState().patchEditor;
+            this.store.dispatch(setPatch(mode, patch));
+        }
+    }
 }

@@ -19,6 +19,7 @@ const AppMenuContainer = ({
                 onOpenPatchClick={() => appController.openPatchClicked()}
                 onSavePatchClick={() => appController.savePatchClicked()}
                 onExportSysExClick={onExportSysExClick}
+                onReceivePatchClick={() => appController.receivePatchClicked()}
                 onSettingsClick={onSettingsClick}
                 onAboutClick={onAboutClick}
             />

@@ -4,6 +4,7 @@ import {
     faCog,
     faShare,
     faQuestionCircle,
+    faMicrochip,
 } from '@fortawesome/free-solid-svg-icons';
 import { faFolderOpen, faSave } from '@fortawesome/free-regular-svg-icons';
 
@@ -17,6 +18,9 @@ const AppMenu = props => (
         </CustomMenuItem>
         <CustomMenuItem icon={faShare} onClick={props.onExportSysExClick}>
             Export as SysEx
+        </CustomMenuItem>
+        <CustomMenuItem icon={faMicrochip} onClick={props.onReceivePatchClick}>
+            Receive patch
         </CustomMenuItem>
         <CustomMenuItem icon={faCog} onClick={props.onSettingsClick}>
             Settings
