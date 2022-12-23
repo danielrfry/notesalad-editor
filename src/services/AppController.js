@@ -3,8 +3,9 @@ import { setPatch } from '../redux/patchEditorSlice';
 import { downloadBlob } from '../utils';
 
 export default class AppController {
-    constructor(store) {
+    constructor(store, midiOutputService) {
         this.store = store;
+        this.midiOutputService = midiOutputService;
         this.patchFileBrowserRef = React.createRef();
     }
 

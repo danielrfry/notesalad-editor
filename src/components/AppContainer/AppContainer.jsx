@@ -1,8 +1,6 @@
 import React from 'react';
 import { setMode } from '../../redux/patchEditorSlice';
 import { connect } from 'react-redux';
-import { store } from '../../redux/store';
-import AppController from '../../services/AppController';
 import MIDIEnvironment from '../MIDI/MIDIEnvironment/MIDIEnvironment';
 import { selectMIDIDevices } from '../../services/MIDIDeviceSelector';
 import MIDIDeviceEnumerator from '../MIDI/MIDIDeviceEnumerator/MIDIDeviceEnumerator';
@@ -12,6 +10,7 @@ import SettingsDialogContainer from '../SettingsDialogContainer/SettingsDialogCo
 import ConsoleDevTools from '../ConsoleDevTools/ConsoleDevTools';
 import ExportSysExDialogContainer from '../ExportSysExDialogContainer/ExportSysExDialogContainer';
 import AboutDialogContainer from '../AboutDialogContainer/AboutDialogContainer';
+import AppControllerProvider from '../AppControllerProvider/AppControllerProvider';
 
 class AppContainer extends React.Component {
     constructor(props) {
@@ -21,7 +20,6 @@ class AppContainer extends React.Component {
             suspended: false,
             deviceList: { inputs: [], outputs: [] },
         };
-        this.appController = new AppController(store);
     }
 
     _handleReadyChanged = ready => {
@@ -34,10 +32,6 @@ class AppContainer extends React.Component {
 
     _handleDeviceListChanged = newDeviceList => {
         this.setState({ deviceList: newDeviceList });
-    };
-
-    _handlePatchFileSelected = e => {
-        this.appController.openPatch(e.target.files);
     };
 
     render = () => {
@@ -63,16 +57,17 @@ class AppContainer extends React.Component {
                     mode={mode}
                 >
                     <ConsoleDevTools />
-                    <App
-                        appController={this.appController}
-                        mode={mode}
-                        onSelectMode={this.selectMode}
-                        ready={ready}
-                        suspended={suspended}
-                        onResumeAudioContext={() => synthOutputPort?.resume()}
-                        onPatchFileSelected={this._handlePatchFileSelected}
-                        fileBrowserRef={this.appController.patchFileBrowserRef}
-                    />
+                    <AppControllerProvider>
+                        <App
+                            mode={mode}
+                            onSelectMode={this.selectMode}
+                            ready={ready}
+                            suspended={suspended}
+                            onResumeAudioContext={() =>
+                                synthOutputPort?.resume()
+                            }
+                        />
+                    </AppControllerProvider>
                     <MIDIPatchContainer mode={mode} />
                     <SettingsDialogContainer devices={deviceList} />
                     <ExportSysExDialogContainer

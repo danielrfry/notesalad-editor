@@ -9,9 +9,12 @@ import OPMEditor from '../OPM/OPMEditor/OPMEditor';
 import SD1Editor from '../SD1/SD1Editor/SD1Editor';
 import { Modes } from '../../types';
 import FileBrowser from '../FileBrowser/FileBrowser';
+import Theme from '../Theme/Theme';
+import { useContext } from 'react';
+import { AppControllerContext } from '../AppControllerProvider/AppControllerProvider';
 
 import './App.css';
-import Theme from '../Theme/Theme';
+import { useCallback } from 'react';
 
 const getPatchEditor = mode => {
     switch (mode) {
@@ -37,15 +40,17 @@ const getCSSThemeForMode = mode => {
 };
 
 const App = ({
-    appController,
     mode,
     onSelectMode,
     ready,
     suspended,
     onResumeAudioContext,
-    onPatchFileSelected,
-    fileBrowserRef,
 }) => {
+    const appController = useContext(AppControllerContext);
+    const handlePatchFileSelected = useCallback(
+        e => appController.openPatch(e.target.files),
+        [appController]
+    );
     return (
         <div className="app">
             <Theme themeClass={getCSSThemeForMode(mode)} />
@@ -91,9 +96,9 @@ const App = ({
                 )}
             </div>
             <FileBrowser
-                ref={fileBrowserRef}
+                ref={appController.patchFileBrowserRef}
                 accept="application/json,.json"
-                onFileSelected={onPatchFileSelected}
+                onFileSelected={handlePatchFileSelected}
             />
         </div>
     );
