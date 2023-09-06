@@ -51,19 +51,25 @@ export default class MIDIOutputService {
     rpn = (n, value) => {
         const nmsb = (n & 0x3f80) >> 7;
         const nlsb = n & 0x7f;
-        this.sendMessage([0xb0, 101, nmsb]);
-        this.sendMessage([0xb0, 100, nlsb]);
-        this.sendMessage([0xb0, 6, (value >> 7) & 0x7f]);
-        this.sendMessage([0xb0, 38, value & 0x7f]);
+        const messages = [
+            [0xb0, 101, nmsb],
+            [0xb0, 100, nlsb],
+            [0xb0, 6, (value >> 7) & 0x7f],
+            [0xb0, 38, value & 0x7f],
+        ];
+        this.sendMessage(_.flatten(messages));
     };
 
     nrpn = (n, value) => {
         const nmsb = (n & 0x3f80) >> 7;
         const nlsb = n & 0x7f;
-        this.sendMessage([0xb0, 99, nmsb]);
-        this.sendMessage([0xb0, 98, nlsb]);
-        this.sendMessage([0xb0, 6, (value >> 7) & 0x7f]);
-        this.sendMessage([0xb0, 38, value & 0x7f]);
+        const messages = [
+            [0xb0, 99, nmsb],
+            [0xb0, 98, nlsb],
+            [0xb0, 6, (value >> 7) & 0x7f],
+            [0xb0, 38, value & 0x7f],
+        ];
+        this.sendMessage(_.flatten(messages));
     };
 
     processInputMessage = message => {
