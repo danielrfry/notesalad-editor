@@ -6,6 +6,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
+    env:
+      NTSLD_EMSDK_VERSION: 3.1.41
     steps:
       - name: Check out notesalad-editor
         uses: actions/checkout@v3
@@ -22,11 +24,11 @@ jobs:
         with:
           repository: emscripten-core/emsdk
           path: emsdk
-      - name: Install latest emsdk
-        run: ./emsdk install latest
+      - name: Install emsdk
+        run: ./emsdk install "$NTSLD_EMSDK_VERSION"
         working-directory: emsdk
-      - name: Activate latest emsdk
-        run: ./emsdk activate latest
+      - name: Activate emsdk
+        run: ./emsdk activate "$NTSLD_EMSDK_VERSION"
         working-directory: emsdk
       - name: Build notesalad
         run: source ../../emsdk/emsdk_env.sh && npm install && npm run build
