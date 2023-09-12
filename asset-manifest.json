@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/notesalad-editor/static/css/main.43e663ba.css",
+    "main.js": "/notesalad-editor/static/js/main.7ee17bcb.js",
+    "static/media/LicenceText.txt": "/notesalad-editor/static/media/LicenceText.fb43dd3cb04dd2fbdd80.txt",
+    "index.html": "/notesalad-editor/index.html",
+    "main.43e663ba.css.map": "/notesalad-editor/static/css/main.43e663ba.css.map",
+    "main.7ee17bcb.js.map": "/notesalad-editor/static/js/main.7ee17bcb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.43e663ba.css",
+    "static/js/main.7ee17bcb.js"
+  ]
+}
