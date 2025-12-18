@@ -7,7 +7,7 @@ export const EMULATOR_STATE_CLOSED = 'closed';
 export const EMULATOR_STATE_SUSPENDED = 'suspended';
 export const EMULATOR_STATE_RUNNING = 'running';
 
-const LIBNOTESALAD_PATH = process.env.PUBLIC_URL + '/static/js/libnotesalad.js';
+const LIBNOTESALAD_PATH = '/static/js/libnotesalad.js';
 
 export default class EmulatorBase extends EventTarget {
     constructor() {
