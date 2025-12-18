@@ -3,24 +3,17 @@
     inset: 0;
 }
 
-.custom-dialog__overlay {
+.custom-dialog__backdrop {
     position: absolute;
     inset: 0;
     background-color: var(--theme-bg);
     opacity: 70%;
-}
-
-.custom-dialog__overlay--transition {
     transition-property: opacity;
     transition-duration: 0.2s;
 }
 
-.custom-dialog__overlay--out {
+.custom-dialog__backdrop[data-closed] {
     opacity: 0%;
-}
-
-.custom-dialog__overlay--in {
-    opacity: 70%;
 }
 
 .custom-dialog__container {
@@ -44,14 +37,11 @@
     border-radius: 6px;
     color: var(--theme-fg);
     opacity: 100%;
-}
-
-.custom-dialog__content--transition {
     transition-property: opacity, transform;
     transition-duration: 0.2s;
 }
 
-.custom-dialog__content--out {
+.custom-dialog__content[data-closed] {
     opacity: 0%;
     transform: scale(0.9);
 }

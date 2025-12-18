@@ -1,39 +1,25 @@
 import React from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react';
 
 import './CustomDialog.css';
 import Button from '../Button/Button';
 
 const CustomDialog = ({ title, children, open, onClose, initialFocus }) => (
-    <Transition show={open}>
-        <Dialog
-            onClose={onClose}
-            className="custom-dialog"
-            initialFocus={initialFocus}
-        >
-            <Transition.Child
-                className="custom-dialog__overlay"
-                enter="custom-dialog__overlay--transition"
-                enterFrom="custom-dialog__overlay--out"
-                leave="custom-dialog__overlay--transition"
-                leaveTo="custom-dialog__overlay--out"
-            />
+    <Dialog
+        open={open}
+        onClose={onClose}
+        className="custom-dialog"
+        initialFocus={initialFocus}
+    >
+        <DialogBackdrop transition className="custom-dialog__backdrop" />
 
-            <div className="custom-dialog__container">
-                <Transition.Child
-                    as={Dialog.Panel}
-                    className="custom-dialog__content"
-                    enter="custom-dialog__content--transition"
-                    enterFrom="custom-dialog__content--out"
-                    leave="custom-dialog__content--transition"
-                    leaveTo="custom-dialog__content--out"
-                >
-                    <div className="custom-dialog__title">{title}</div>
-                    {children}
-                </Transition.Child>
-            </div>
-        </Dialog>
-    </Transition>
+        <div className="custom-dialog__container">
+            <DialogPanel transition className="custom-dialog__content">
+                <div className="custom-dialog__title">{title}</div>
+                {children}
+            </DialogPanel>
+        </div>
+    </Dialog>
 );
 
 CustomDialog.ButtonGroup = ({ children }) => (
