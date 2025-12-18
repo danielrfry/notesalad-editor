@@ -14,14 +14,13 @@ const Button = React.forwardRef(
             hover,
             onClick,
             children,
-            enabled: controlEnabled,
+            enabled: controlEnabled = true,
             tabIndex,
         },
         ref
     ) => {
-        const { enabled, useDisabledStyles } = useGroupEnabledState(
-            controlEnabled
-        );
+        const { enabled, useDisabledStyles } =
+            useGroupEnabledState(controlEnabled);
 
         return (
             <button
@@ -42,9 +41,5 @@ const Button = React.forwardRef(
         );
     }
 );
-Button.defaultProps = {
-    enabled: true,
-    useDisabledStyles: true,
-};
 
 export default Button;

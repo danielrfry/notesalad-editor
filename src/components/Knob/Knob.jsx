@@ -13,7 +13,7 @@ const FINE_DRAG_DISTANCE = 50;
 
 const rads = Math.PI / 180;
 
-const Arc = props => {
+const Arc = (props) => {
     const { cx, cy, radius, start, end, ...others } = props;
     const x1 = cx + Math.sin(start * rads) * radius;
     const y1 = cy - Math.cos(start * rads) * radius;
@@ -28,7 +28,7 @@ const Arc = props => {
     );
 };
 
-const getHeight = size => {
+const getHeight = (size) => {
     const hs = size / 2;
     const y1 = hs - Math.cos(ANGLE_START * rads) * hs;
     const y2 = hs - Math.cos(ANGLE_END * rads) * hs;
@@ -51,18 +51,17 @@ const getLinearDragValue = (dY, min, max) => {
     return (dY / DRAG_DISTANCE) * (max - min);
 };
 
-const Knob = props => {
-    const {
-        min,
-        max,
-        value,
-        formatter,
-        onValueChange,
-        size,
-        stepValue,
-        enabled: controlEnabled,
-        tabIndex,
-    } = props;
+const Knob = ({
+    min,
+    max,
+    value,
+    formatter,
+    onValueChange,
+    size = 80,
+    stepValue = 1,
+    enabled: controlEnabled = true,
+    tabIndex = 0,
+}) => {
     const clampedValue = Math.max(min, Math.min(value, max));
     const normalisedValue = (clampedValue - min) / (max - min);
     const end = normalisedValue * (ANGLE_END - ANGLE_START) + ANGLE_START;
@@ -84,7 +83,7 @@ const Knob = props => {
     );
 
     const handleKeyDown = useCallback(
-        e => {
+        (e) => {
             const { key } = e;
             let newValue = clampedValue;
             if (key === 'ArrowUp') {
@@ -139,13 +138,6 @@ const Knob = props => {
             </Centre>
         </div>
     );
-};
-Knob.defaultProps = {
-    enabled: true,
-    size: 80,
-    stepValue: 1,
-    useDisabledStyles: true,
-    tabIndex: 0,
 };
 
 export default Knob;

@@ -5,10 +5,10 @@ import MIDIOutputService from '../../../services/MIDIOutputService';
 export const MIDIOutputServiceContext = React.createContext();
 
 const MIDIOutputServiceProvider = ({
-    synthInputPort,
-    synthOutputPort,
+    synthInputPort = undefined,
+    synthOutputPort = undefined,
     mode,
-    enabled,
+    enabled = false,
     children,
 }) => {
     const outputService = useMemo(() => {
@@ -37,11 +37,6 @@ const MIDIOutputServiceProvider = ({
             {children}
         </MIDIOutputServiceContext.Provider>
     );
-};
-MIDIOutputServiceProvider.defaultProps = {
-    synthInputPort: undefined,
-    synthOutputPort: undefined,
-    enabled: false,
 };
 
 export default MIDIOutputServiceProvider;

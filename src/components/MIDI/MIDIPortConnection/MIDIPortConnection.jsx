@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const MIDIPortConnection = ({ port, onPortStateChanged }) => {
+const MIDIPortConnection = ({ port = undefined, onPortStateChanged = () => {} }) => {
     useEffect(() => {
         if (port) {
             console.info(
@@ -36,10 +36,6 @@ const MIDIPortConnection = ({ port, onPortStateChanged }) => {
     }, [port, onPortStateChanged]);
 
     return null;
-};
-MIDIPortConnection.defaultProps = {
-    port: undefined,
-    onPortStateChanged: () => {},
 };
 
 export default MIDIPortConnection;

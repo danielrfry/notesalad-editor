@@ -7,7 +7,7 @@ const DropDownList = ({
     value,
     onChange,
     extraClasses,
-    enabled,
+    enabled = true,
     tabIndex,
     children,
 }) => {
@@ -29,9 +29,6 @@ const DropDownList = ({
             {children}
         </select>
     );
-};
-DropDownList.defaultProps = {
-    enabled: true,
 };
 
 export const DropDownItem = ({ value, children }) => (

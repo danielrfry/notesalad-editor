@@ -10,12 +10,12 @@ const getSuspendedState = synthOutputPortState =>
     synthOutputPortState === 'suspended';
 
 const MIDIEnvironment = ({
-    synthInputPort,
-    synthOutputPort,
-    controlInputPort,
-    mode,
-    onReadyChanged,
-    onSuspendedChanged,
+    synthInputPort = undefined,
+    synthOutputPort = undefined,
+    controlInputPort = undefined,
+    mode = undefined,
+    onReadyChanged = _ => {},
+    onSuspendedChanged = _ => {},
     children,
 }) => {
     const [synthInputPortState, setSynthInputPortState] = useState('closed');
@@ -70,15 +70,6 @@ const MIDIEnvironment = ({
             </MIDIOutputServiceProvider>
         </>
     );
-};
-
-MIDIEnvironment.defaultProps = {
-    synthInputPort: undefined,
-    synthOutputPort: undefined,
-    controlInputPort: undefined,
-    mode: undefined,
-    onReadyChanged: _ => {},
-    onSuspendedChanged: _ => {},
 };
 
 export default MIDIEnvironment;
