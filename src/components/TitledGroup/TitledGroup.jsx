@@ -3,24 +3,23 @@ import classNames from 'classnames';
 
 import './TitledGroup.css';
 
-const TitledGroup = props => {
+const TitledGroup = ({ withMargin = true, fillV, extraClasses, extraStyles, title, children }) => {
     return (
         <div
             className={classNames(
                 'titled-group',
                 {
-                    'titled-group--with-margin': props.withMargin,
-                    'titled-group--fill-v': props.fillV,
+                    'titled-group--with-margin': withMargin,
+                    'titled-group--fill-v': fillV,
                 },
-                props.extraClasses
+                extraClasses
             )}
-            style={props.extraStyles}
+            style={extraStyles}
         >
-            <div className="titled-group__title">{props.title}</div>
-            <div className="titled-group__contents">{props.children}</div>
+            <div className="titled-group__title">{title}</div>
+            <div className="titled-group__contents">{children}</div>
         </div>
     );
 };
-TitledGroup.defaultProps = { withMargin: true };
 
 export default TitledGroup;
