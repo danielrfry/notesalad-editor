@@ -4,19 +4,24 @@
 
 .custom-menu-button__popover {
     z-index: 100;
+    position: relative;
     overflow: hidden;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    opacity: 1;
 }
 
-.custom-menu-button__popover--transition {
+.custom-menu-button__popover[data-closed] {
+    opacity: 0.5;
+}
+
+.custom-menu-button__popover-content {
     transition-property: transform;
     transition-duration: 0.2s;
     transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-.custom-menu-button__popover--open {
     transform: translateY(0);
 }
 
-.custom-menu-button__popover--closed {
+.custom-menu-button__popover[data-closed] .custom-menu-button__popover-content {
     transform: translateY(-100%);
 }
