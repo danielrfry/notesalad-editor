@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import Centre from '../Centre/Centre';
 import useDrag from '../../hooks/drag';
 import classNames from 'classnames';

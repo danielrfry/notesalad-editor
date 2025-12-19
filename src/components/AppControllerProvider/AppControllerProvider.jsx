@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useContext } from 'react';
 import { useStore } from 'react-redux';
 import AppController from '../../services/AppController';

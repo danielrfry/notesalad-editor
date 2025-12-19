@@ -30,13 +30,13 @@ class Keyboard extends React.Component {
         }
     };
 
-    handlePointerDown = e => {
+    handlePointerDown = (e) => {
         e.preventDefault();
         const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
         this.selectNote(noteAtPointer, e.pointerId);
     };
 
-    handlePointerMove = e => {
+    handlePointerMove = (e) => {
         if (e.pointerId in this.selectedNotes) {
             e.preventDefault();
             const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
@@ -44,7 +44,7 @@ class Keyboard extends React.Component {
         }
     };
 
-    handlePointerUp = e => {
+    handlePointerUp = (e) => {
         if (e.pointerId in this.selectedNotes) {
             e.preventDefault();
             this.selectNote(undefined, e.pointerId);

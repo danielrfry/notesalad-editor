@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';
 import DropDownList, { DropDownItem } from '../../DropDownList/DropDownList';
 import { DRUM_NOTE_NAMES, getNoteName } from '../../../midi';
@@ -25,7 +24,7 @@ const DrumDestParams = ({
                 onChange={onSetBank}
                 extraClasses="exportSysExDlg__bankSelect"
             >
-                {_.range(0, 128).map(b => (
+                {_.range(0, 128).map((b) => (
                     <DropDownItem key={b} value={b}>
                         Bank {b}
                     </DropDownItem>
@@ -36,14 +35,14 @@ const DrumDestParams = ({
                 onChange={onSetProgram}
                 extraClasses="exportSysExDlg__progSelect"
             >
-                {_.range(0, 128).map(p => (
+                {_.range(0, 128).map((p) => (
                     <DropDownItem key={p} value={p}>
                         Program {p}
                     </DropDownItem>
                 ))}
             </DropDownList>
             <DropDownList value={noteNum} onChange={onSetNoteNum}>
-                {_.range(0, 128).map(n => (
+                {_.range(0, 128).map((n) => (
                     <DropDownItem key={n} value={n}>
                         {n in DRUM_NOTE_NAMES
                             ? `${getNoteName(n)}: ${DRUM_NOTE_NAMES[n]}`
@@ -55,14 +54,14 @@ const DrumDestParams = ({
     </>
 );
 
-const mapStateToProps = state =>
+const mapStateToProps = (state) =>
     state.uiState.exportSysExDialog.destinationAddress.drumProgram;
-const mapDispatchToProps = dispatch => ({
-    onSetBank: bank =>
+const mapDispatchToProps = (dispatch) => ({
+    onSetBank: (bank) =>
         dispatch(updateExportSysExDestDrumProg({ bank: parseInt(bank) })),
-    onSetProgram: program =>
+    onSetProgram: (program) =>
         dispatch(updateExportSysExDestDrumProg({ program: parseInt(program) })),
-    onSetNoteNum: noteNum =>
+    onSetNoteNum: (noteNum) =>
         dispatch(updateExportSysExDestDrumProg({ noteNum: parseInt(noteNum) })),
 });
 

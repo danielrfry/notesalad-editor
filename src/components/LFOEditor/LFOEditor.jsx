@@ -1,4 +1,3 @@
-import React from 'react';
 import ParamButton from '../Button/ParamButton';
 import ColumnsLayout from '../ColumnsLayout/ColumnsLayout';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';

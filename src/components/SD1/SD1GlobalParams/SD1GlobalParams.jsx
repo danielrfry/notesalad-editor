@@ -62,7 +62,7 @@ export default class SD1GlobalParams extends React.Component {
     _handleSet2OpClicked = () => this.props.onSet4Op(false);
     _handleSet4OpClicked = () => this.props.onSet4Op(true);
 
-    getConnectionButtons = is4Op =>
+    getConnectionButtons = (is4Op) =>
         is4Op ? (
             <>
                 <ConnectionButton path={`${Modes.SD1}.alg`} set={2} />

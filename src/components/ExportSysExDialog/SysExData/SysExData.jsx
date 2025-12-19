@@ -2,7 +2,6 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Transition } from '@headlessui/react';
-import React from 'react';
 import Button from '../../Button/Button';
 
 import './SysExData.css';

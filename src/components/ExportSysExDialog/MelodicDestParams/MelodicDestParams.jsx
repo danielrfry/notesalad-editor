@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import { connect } from 'react-redux';
 import { PROGRAM_NAMES } from '../../../midi';
 import { updateExportSysExDestMelodicProg } from '../../../redux/uiStateSlice';
@@ -18,14 +17,14 @@ const MelodicDestParams = ({ bank, onSetBank, program, onSetProgram }) => (
                 onChange={onSetBank}
                 extraClasses="exportSysExDlg__bankSelect"
             >
-                {_.range(0, 128).map(b => (
+                {_.range(0, 128).map((b) => (
                     <DropDownItem key={b} value={b}>
                         Bank {b}
                     </DropDownItem>
                 ))}
             </DropDownList>
             <DropDownList value={program} onChange={onSetProgram}>
-                {_.range(0, 128).map(p => (
+                {_.range(0, 128).map((p) => (
                     <DropDownItem key={p} value={p}>
                         {p}: {PROGRAM_NAMES[p]}
                     </DropDownItem>
@@ -35,12 +34,12 @@ const MelodicDestParams = ({ bank, onSetBank, program, onSetProgram }) => (
     </>
 );
 
-const mapStateToProps = state =>
+const mapStateToProps = (state) =>
     state.uiState.exportSysExDialog.destinationAddress.melodicProgram;
-const mapDispatchToProps = dispatch => ({
-    onSetBank: bank =>
+const mapDispatchToProps = (dispatch) => ({
+    onSetBank: (bank) =>
         dispatch(updateExportSysExDestMelodicProg({ bank: parseInt(bank) })),
-    onSetProgram: program =>
+    onSetProgram: (program) =>
         dispatch(
             updateExportSysExDestMelodicProg({ program: parseInt(program) })
         ),

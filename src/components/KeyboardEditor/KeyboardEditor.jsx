@@ -1,10 +1,9 @@
-import React from 'react';
 import KeyboardContainer from '../KeyboardContainer/KeyboardContainer';
 import ResumeOverlay from '../ResumeOverlay/ResumeOverlay';
 
 import './KeyboardEditor.css';
 
-const KeyboardEditor = props => (
+const KeyboardEditor = (props) => (
     <div className="keyboard-editor">
         <div className="keyboard-editor__keyboard">
             <KeyboardContainer

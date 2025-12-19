@@ -1,9 +1,15 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import './TitledGroup.css';
 
-const TitledGroup = ({ withMargin = true, fillV, extraClasses, extraStyles, title, children }) => {
+const TitledGroup = ({
+    withMargin = true,
+    fillV,
+    extraClasses,
+    extraStyles,
+    title,
+    children,
+}) => {
     return (
         <div
             className={classNames(

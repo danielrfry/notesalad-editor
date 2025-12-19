@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import patchSchemaManager from '../../../services/PatchSchemaManager';
 import NRPNContainer from '../NRPNContainer/NRPNContainer';
@@ -6,7 +5,7 @@ import NRPNContainer from '../NRPNContainer/NRPNContainer';
 const MIDIPatchContainer = ({ mode }) => {
     const schema = patchSchemaManager.schemas[mode];
 
-    return schema?.params.map(param => (
+    return schema?.params.map((param) => (
         <NRPNContainer
             param={param.id}
             path={`${mode}.${param.path}`}
@@ -15,7 +14,7 @@ const MIDIPatchContainer = ({ mode }) => {
     ));
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     mode: state.patchEditor.mode,
 });
 

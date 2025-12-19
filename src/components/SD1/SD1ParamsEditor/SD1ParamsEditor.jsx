@@ -1,4 +1,3 @@
-import React from 'react';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';
 import SD1GlobalParams from '../SD1GlobalParams/SD1GlobalParams';
 import SD1OpEditor from '../SD1OpParams/SD1OpParams';
@@ -18,7 +17,7 @@ const SD1ParamsEditor = ({ enabled, patch, onSet4Op }) => {
                 patch={patch}
                 onSet4Op={onSet4Op}
             />
-            {_.times(4, op => (
+            {_.times(4, (op) => (
                 <div key={`op_${op}`}>
                     <SD1OpEditor
                         opIndex={op}
@@ -30,12 +29,12 @@ const SD1ParamsEditor = ({ enabled, patch, onSet4Op }) => {
     );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     patch: state.patchEditor.patch[Modes.SD1],
 });
 
-const mapDispatchToProps = dispatch => ({
-    onSet4Op: new4Op => dispatch(setSD1Patch4Op(new4Op)),
+const mapDispatchToProps = (dispatch) => ({
+    onSet4Op: (new4Op) => dispatch(setSD1Patch4Op(new4Op)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SD1ParamsEditor);

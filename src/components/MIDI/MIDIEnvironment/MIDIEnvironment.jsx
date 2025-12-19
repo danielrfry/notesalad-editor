@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MIDIDevTools from '../MIDIDevTools/MIDIDevTools';
 import MIDIInputServiceContainer from '../MIDIInputServiceContainer/MIDIInputServiceContainer';
 import MIDIOutputServiceProvider from '../MIDIOutputServiceProvider/MIDIOutputServiceProvider';
@@ -6,7 +6,7 @@ import MIDIPortConnection from '../MIDIPortConnection/MIDIPortConnection';
 
 const getReadyState = (synthInputPortState, synthOutputPortState) =>
     synthInputPortState === 'open' && synthOutputPortState === 'open';
-const getSuspendedState = synthOutputPortState =>
+const getSuspendedState = (synthOutputPortState) =>
     synthOutputPortState === 'suspended';
 
 const MIDIEnvironment = ({
@@ -14,8 +14,8 @@ const MIDIEnvironment = ({
     synthOutputPort = undefined,
     controlInputPort = undefined,
     mode = undefined,
-    onReadyChanged = _ => {},
-    onSuspendedChanged = _ => {},
+    onReadyChanged = (_) => {},
+    onSuspendedChanged = (_) => {},
     children,
 }) => {
     const [synthInputPortState, setSynthInputPortState] = useState('closed');

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modes } from '../../types';
 import OPLConnectionImage from './OPLConnectionImage';
 import OPMConnectionImage from './OPMConnectionImage';

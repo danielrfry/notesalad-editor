@@ -1,7 +1,6 @@
-import React from 'react';
 import './Centre.css';
 
-const Centre = props => {
+const Centre = (props) => {
     return (
         <div className="centre">
             <div>{props.children}</div>

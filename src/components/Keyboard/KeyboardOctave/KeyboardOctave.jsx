@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import './KeyboardOctave.css';
@@ -7,7 +6,7 @@ const KeyboardOctave = ({ octave, activeNotes, highlighted }) => {
     const n = (octave + 2) * 12;
     const cLabel = `C${octave}`;
 
-    const isNoteActive = note => activeNotes.includes(note + n);
+    const isNoteActive = (note) => activeNotes.includes(note + n);
 
     return (
         <div

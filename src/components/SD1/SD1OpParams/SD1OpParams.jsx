@@ -1,4 +1,3 @@
-import React from 'react';
 import ColumnTitle from '../../ColumnTitle/ColumnTitle';
 import classNames from 'classnames';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';
@@ -13,13 +12,13 @@ import './SD1OpParams.css';
 import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 import ScrollArea from '../../ScrollArea/ScrollArea';
 
-const WaveButton = props => (
+const WaveButton = (props) => (
     <ParamButton path={props.path} set={props.shape}>
         <WaveIcon shape={props.shape} />
     </ParamButton>
 );
 
-const SD1OpEditor = props => {
+const SD1OpEditor = (props) => {
     const { opIndex, enabled } = props;
     const pathBase = `${Modes.SD1}.operators[${opIndex}]`;
 

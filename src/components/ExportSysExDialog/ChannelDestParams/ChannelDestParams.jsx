@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { setExportSysExDestChannel } from '../../../redux/uiStateSlice';
@@ -7,7 +6,7 @@ import DropDownList, { DropDownItem } from '../../DropDownList/DropDownList';
 
 const ChannelDestParams = ({ channel, onSetChannel }) => {
     const handleChange = useCallback(
-        channel => {
+        (channel) => {
             onSetChannel(parseInt(channel));
         },
         [onSetChannel]
@@ -20,7 +19,7 @@ const ChannelDestParams = ({ channel, onSetChannel }) => {
                 channel:
             </p>
             <DropDownList value={channel} onChange={handleChange}>
-                {_.range(0, 16).map(ch => (
+                {_.range(0, 16).map((ch) => (
                     <DropDownItem key={ch} value={ch}>
                         Channel {ch + 1}
                     </DropDownItem>
@@ -30,7 +29,7 @@ const ChannelDestParams = ({ channel, onSetChannel }) => {
     );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     channel: state.uiState.exportSysExDialog.destinationAddress.channel,
 });
 const mapDispatchToProps = {

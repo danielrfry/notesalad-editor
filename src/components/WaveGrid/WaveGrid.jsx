@@ -1,5 +1,3 @@
-import React from 'react';
-
 const WaveGrid = ({ columnCount = 2, children }) => (
     <div
         style={{

@@ -103,12 +103,12 @@ class OPLGlobalParams extends React.Component {
     };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     is4Op: state.patchEditor.patch[Modes.OPL].is4Op,
 });
 
-const mapDispatchToProps = dispatch => ({
-    onSet4Op: new4OpMode => dispatch(setOPLPatch4Op(new4OpMode)),
+const mapDispatchToProps = (dispatch) => ({
+    onSet4Op: (new4OpMode) => dispatch(setOPLPatch4Op(new4OpMode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OPLGlobalParams);

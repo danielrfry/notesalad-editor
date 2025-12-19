@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 import './FileBrowser.css';
 
@@ -22,7 +22,7 @@ const FileBrowser = forwardRef(({ accept, onFileSelected }, ref) => {
                 ref={inputRef}
                 type="file"
                 accept={accept}
-                onChange={e => {
+                onChange={(e) => {
                     if (!clearing) {
                         onFileSelected(e);
                     }

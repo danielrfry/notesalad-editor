@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import ColumnsLayout from '../ColumnsLayout/ColumnsLayout';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';
 import { DropDownItem } from '../DropDownList/DropDownList';
@@ -41,12 +40,12 @@ const GenericParamsEditor = ({ mode }) => (
                 </TitledGroup>
             </div>
         </div>
-        {_.range(0, NUM_PARAM_MAPS).map(mapNo => (
+        {_.range(0, NUM_PARAM_MAPS).map((mapNo) => (
             <div key={mapNo} style={{ marginLeft: '30px' }}>
                 <ParamMapEditor mode={mode} mapNo={mapNo} />
             </div>
         ))}
-        {_.range(0, NUM_LFOS).map(lfoNo => (
+        {_.range(0, NUM_LFOS).map((lfoNo) => (
             <div key={lfoNo} style={{ marginLeft: '30px' }}>
                 <LFOEditor mode={mode} lfoNo={lfoNo} />
             </div>

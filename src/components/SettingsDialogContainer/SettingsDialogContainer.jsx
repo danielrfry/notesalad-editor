@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { setPreferredDevices } from '../../redux/settingsSlice';
 import { closeSettingsDialog } from '../../redux/uiStateSlice';
@@ -22,7 +22,7 @@ const filterDeviceList = (deviceList, mode) => {
             },
             DEVICE_NONE,
             ...deviceList.outputs.filter(
-                dev => dev.deviceMode === undefined || dev.deviceMode === mode
+                (dev) => dev.deviceMode === undefined || dev.deviceMode === mode
             ),
         ],
         synthInputs: [
@@ -32,7 +32,7 @@ const filterDeviceList = (deviceList, mode) => {
             },
             DEVICE_NONE,
             ...deviceList.inputs.filter(
-                dev => dev.deviceMode === undefined || dev.deviceMode === mode
+                (dev) => dev.deviceMode === undefined || dev.deviceMode === mode
             ),
         ],
         controlInputs: [
@@ -42,7 +42,7 @@ const filterDeviceList = (deviceList, mode) => {
             },
             DEVICE_NONE,
             ...deviceList.inputs.filter(
-                dev =>
+                (dev) =>
                     !dev.isEmulator &&
                     (dev.deviceMode === undefined || dev.deviceMode === mode)
             ),
@@ -51,10 +51,10 @@ const filterDeviceList = (deviceList, mode) => {
 };
 
 const findDeviceByID = (deviceList, id) =>
-    deviceList.find(dev => dev.id === id);
+    deviceList.find((dev) => dev.id === id);
 
 const findDeviceByName = (deviceList, name) =>
-    deviceList.find(dev => dev.name === name);
+    deviceList.find((dev) => dev.name === name);
 
 const getDeviceInfoByID = (deviceList, id) => {
     const device = findDeviceByID(deviceList, id);
@@ -88,10 +88,10 @@ const SettingsDialogContainer = ({
         setSelectedControlInputID,
     ]);
 
-    const filteredDevices = useMemo(() => filterDeviceList(devices, mode), [
-        devices,
-        mode,
-    ]);
+    const filteredDevices = useMemo(
+        () => filterDeviceList(devices, mode),
+        [devices, mode]
+    );
 
     const handleApplyClicked = useCallback(() => {
         const newPreferredDevices = {
@@ -119,7 +119,7 @@ const SettingsDialogContainer = ({
     ]);
 
     const handleSynthOutputChanged = useCallback(
-        newSynthOutputID => {
+        (newSynthOutputID) => {
             setSelectedSynthOutputID(newSynthOutputID);
 
             // Try to find a corresponding input by name:
@@ -156,7 +156,7 @@ const SettingsDialogContainer = ({
     );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     mode: state.patchEditor.mode,
     open: state.uiState.settingsDialogOpen,
     preferredDevices: state.settings.preferredDevices,

@@ -1,4 +1,3 @@
-import React from 'react';
 import AppMenuContainer from '../AppMenuContainer/AppMenuContainer';
 import KeyboardEditor from '../KeyboardEditor/KeyboardEditor';
 import CustomMenuButton from '../CustomMenuButton/CustomMenuButton';
@@ -16,7 +15,7 @@ import { AppControllerContext } from '../AppControllerProvider/AppControllerProv
 import './App.css';
 import { useCallback } from 'react';
 
-const getPatchEditor = mode => {
+const getPatchEditor = (mode) => {
     switch (mode) {
         case Modes.OPL:
             return OPLEditor;
@@ -28,7 +27,7 @@ const getPatchEditor = mode => {
     }
 };
 
-const getCSSThemeForMode = mode => {
+const getCSSThemeForMode = (mode) => {
     switch (mode) {
         case Modes.OPM:
             return 'theme-opm';
@@ -48,7 +47,7 @@ const App = ({
 }) => {
     const appController = useContext(AppControllerContext);
     const handlePatchFileSelected = useCallback(
-        e => appController.openPatch(e.target.files),
+        (e) => appController.openPatch(e.target.files),
         [appController]
     );
     return (
@@ -82,7 +81,7 @@ const App = ({
             <div className="app__body">
                 {mode && (
                     <MIDIOutputServiceContext.Consumer>
-                        {midiOutputService => (
+                        {(midiOutputService) => (
                             <KeyboardEditor
                                 editor={getPatchEditor(mode)}
                                 mode={mode}

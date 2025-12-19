@@ -1,9 +1,8 @@
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
 const UIGroupEnabledContext = React.createContext();
 
-export const useGroupEnabledState = enabled => {
+export const useGroupEnabledState = (enabled) => {
     const groupEnabled = useContext(UIGroupEnabledContext);
     return {
         enabled: enabled && (groupEnabled ?? true),

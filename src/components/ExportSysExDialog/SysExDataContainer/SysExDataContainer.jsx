@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SysExData from '../SysExData/SysExData';
 
-const formatHex = n => {
+const formatHex = (n) => {
     const s = parseInt(n).toString(16);
     if (s.length < 2) {
         return '0' + s;

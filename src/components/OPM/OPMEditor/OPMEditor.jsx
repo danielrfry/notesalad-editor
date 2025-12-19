@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modes } from '../../../types';
 import GenericParamsEditor from '../../GenericParamsEditor/GenericParamsEditor';
 import PageControl from '../../PageControl/PageControl';

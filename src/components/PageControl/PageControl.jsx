@@ -1,10 +1,10 @@
+import React from 'react';
 import {
     faChevronLeft,
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import Button from '../Button/Button';
 import './PageControl.css';
@@ -90,7 +90,7 @@ export default class PageControl extends React.Component {
         }
     };
 
-    _getDirectionClass = direction => {
+    _getDirectionClass = (direction) => {
         if (direction === undefined) {
             return '';
         } else if (direction) {

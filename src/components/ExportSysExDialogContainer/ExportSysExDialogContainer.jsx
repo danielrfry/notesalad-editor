@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import {
     closeExportSysExDialog,
@@ -46,7 +46,7 @@ const ExportSysExDialogContainer = ({
     );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     open: state.uiState.exportSysExDialogOpen,
     destinationAddress: state.uiState.exportSysExDialog.destinationAddress,
 });

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import React from 'react';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';
 import { DropDownItem } from '../DropDownList/DropDownList';
 import TitledGroup from '../TitledGroup/TitledGroup';
@@ -17,18 +16,18 @@ import './ParamMapEditor.css';
 const paramMapSources = [
     { srcID: 255, text: 'None' },
     { srcID: 192, text: 'Velocity' },
-    ..._.range(0, NUM_LFOS).map(lfo => ({
+    ..._.range(0, NUM_LFOS).map((lfo) => ({
         srcID: lfo + 128,
         text: `LFO #${lfo + 1}`,
     })),
-    ..._.range(0, 128).map(cc => ({
+    ..._.range(0, 128).map((cc) => ({
         srcID: cc,
         text: `CC #${cc}`,
     })),
 ];
 
-const getParamMapDestinations = _.memoize(mode =>
-    patchSchemaManager.schemas[mode].params.map(value => (
+const getParamMapDestinations = _.memoize((mode) =>
+    patchSchemaManager.schemas[mode].params.map((value) => (
         <DropDownItem key={value.id} value={value.id}>
             {value.shortDesc}
         </DropDownItem>
@@ -43,7 +42,7 @@ const ParamMapEditor = ({ mapNo, mode }) => {
             <TitledGroup title="SOURCE">
                 <ColumnsLayout stretchH stretchV>
                     <ParamDropDownList path={`${pathBase}.src`}>
-                        {paramMapSources.map(item => (
+                        {paramMapSources.map((item) => (
                             <DropDownItem key={item.srcID} value={item.srcID}>
                                 {item.text}
                             </DropDownItem>

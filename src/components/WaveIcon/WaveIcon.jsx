@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './WaveIcon.css';
 
 const SVG_PROPS = {
@@ -8,7 +6,7 @@ const SVG_PROPS = {
     version: '1.1',
 };
 
-const WaveIcon = props => {
+const WaveIcon = (props) => {
     switch (props.shape) {
         case 0:
             return (

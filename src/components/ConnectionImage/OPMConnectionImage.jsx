@@ -1,5 +1,3 @@
-import React from 'react';
-
 const OPMConnectionImage = ({ conn }) => {
     switch (conn) {
         case 0:

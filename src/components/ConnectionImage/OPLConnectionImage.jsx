@@ -1,5 +1,3 @@
-import React from 'react';
-
 const OPLConnectionImage = ({ conn, is4Op = false }) => {
     if (is4Op) {
         switch (conn) {

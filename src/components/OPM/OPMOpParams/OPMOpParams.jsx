@@ -1,4 +1,3 @@
-import React from 'react';
 import ColumnTitle from '../../ColumnTitle/ColumnTitle';
 import TitledGroup from '../../TitledGroup/TitledGroup';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';
@@ -10,7 +9,7 @@ import { Modes } from '../../../types';
 import './OPMOpParams.css';
 import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 
-const getOperatorToggleBit = opIndex => {
+const getOperatorToggleBit = (opIndex) => {
     switch (opIndex) {
         case 0:
             return 1;

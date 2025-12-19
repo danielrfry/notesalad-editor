@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import Button from '../Button/Button';
 import ColumnsLayout from '../ColumnsLayout/ColumnsLayout';
 import CustomDialog from '../CustomDialog/CustomDialog';
@@ -10,9 +10,8 @@ import ChannelDestParams from './ChannelDestParams/ChannelDestParams';
 import { PatchAddressTypes } from '../../types';
 
 import './ExportSysExDialog.css';
-import { useRef } from 'react';
 
-const getDestinationParams = type => {
+const getDestinationParams = (type) => {
     switch (type) {
         case PatchAddressTypes.Channel:
             return <ChannelDestParams />;

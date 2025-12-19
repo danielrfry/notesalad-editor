@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { setPatchParamFromCC } from '../../../redux/patchEditorSlice';
 import { CONTROL_TO_PARAM_MAPS } from '../../../services/ControlToParamMaps';
@@ -28,7 +28,7 @@ const mapDispatchToProps = {
     setParam: setPatchParamFromCC,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     mode: state.patchEditor.mode,
 });
 

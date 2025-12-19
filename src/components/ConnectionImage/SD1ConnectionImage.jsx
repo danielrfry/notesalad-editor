@@ -1,8 +1,6 @@
-import React from 'react';
-
 import './ConnectionImage.css';
 
-const SD1ConnectionImage = props => {
+const SD1ConnectionImage = (props) => {
     switch (props.conn) {
         case 0:
             return (

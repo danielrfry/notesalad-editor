@@ -1,9 +1,8 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import './ColumnsLayout.css';
 
-const ColumnsLayout = props => (
+const ColumnsLayout = (props) => (
     <div
         className={classNames(
             'columns-layout',

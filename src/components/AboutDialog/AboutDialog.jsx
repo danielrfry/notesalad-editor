@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import CustomDialog from '../CustomDialog/CustomDialog';
 import TitledGroup from '../TitledGroup/TitledGroup';
 import LicenceText from './LicenceText/LicenceText';

@@ -22,26 +22,23 @@ class AppContainer extends React.Component {
         };
     }
 
-    _handleReadyChanged = ready => {
+    _handleReadyChanged = (ready) => {
         this.setState({ ready });
     };
 
-    _handleSuspendedChanged = suspended => {
+    _handleSuspendedChanged = (suspended) => {
         this.setState({ suspended });
     };
 
-    _handleDeviceListChanged = newDeviceList => {
+    _handleDeviceListChanged = (newDeviceList) => {
         this.setState({ deviceList: newDeviceList });
     };
 
     render = () => {
         const { mode, preferredDevices } = this.props;
         const { ready, suspended, deviceList } = this.state;
-        const {
-            synthInputPort,
-            synthOutputPort,
-            controlInputPort,
-        } = selectMIDIDevices(deviceList, mode, preferredDevices);
+        const { synthInputPort, synthOutputPort, controlInputPort } =
+            selectMIDIDevices(deviceList, mode, preferredDevices);
 
         return (
             <>
@@ -80,10 +77,10 @@ class AppContainer extends React.Component {
         );
     };
 
-    selectMode = newMode => this.props.dispatch(setMode(newMode));
+    selectMode = (newMode) => this.props.dispatch(setMode(newMode));
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     mode: state.patchEditor.mode,
     preferredDevices: state.settings.preferredDevices,
 });

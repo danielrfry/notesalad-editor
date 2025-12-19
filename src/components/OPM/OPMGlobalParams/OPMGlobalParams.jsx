@@ -1,4 +1,3 @@
-import React from 'react';
 import TitledGroup from '../../TitledGroup/TitledGroup';
 import ConnectionButton from '../../ConnectionButton/ConnectionButton';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';

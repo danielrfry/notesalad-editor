@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import './DropDownList.css';
 
@@ -12,7 +12,7 @@ const DropDownList = ({
     children,
 }) => {
     const handleChange = useCallback(
-        e => {
+        (e) => {
             onChange?.(e.target.value);
         },
         [onChange]

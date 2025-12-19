@@ -1,4 +1,3 @@
-import React from 'react';
 import CustomMenu, { CustomMenuItem } from '../CustomMenu/CustomMenu';
 import {
     faCog,
@@ -8,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faFolderOpen, faSave } from '@fortawesome/free-regular-svg-icons';
 
-const AppMenu = props => (
+const AppMenu = (props) => (
     <CustomMenu>
         <CustomMenuItem icon={faFolderOpen} onClick={props.onOpenPatchClick}>
             Open patch

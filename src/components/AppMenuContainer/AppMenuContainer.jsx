@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import {
     openAboutDialog,
@@ -27,7 +26,7 @@ const AppMenuContainer = ({
     );
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     onSettingsClick: () => dispatch(openSettingsDialog()),
     onExportSysExClick: () => dispatch(openExportSysExDialog()),
     onAboutClick: () => dispatch(openAboutDialog()),

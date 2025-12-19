@@ -36,7 +36,7 @@ export default class MusicalTyping extends React.Component {
         document.removeEventListener('keyup', this.handleKeyUp);
     };
 
-    handleKeyDown = e => {
+    handleKeyDown = (e) => {
         if (!e.repeat) {
             if (e.code === 'BracketLeft') {
                 this.cancelActiveNotes();
@@ -57,7 +57,7 @@ export default class MusicalTyping extends React.Component {
         }
     };
 
-    handleKeyUp = e => {
+    handleKeyUp = (e) => {
         const note = keyNoteMap[e.code];
         if (note !== undefined) {
             const midiNote = this.getMIDINote(note);
@@ -68,7 +68,7 @@ export default class MusicalTyping extends React.Component {
         }
     };
 
-    getMIDINote = note => {
+    getMIDINote = (note) => {
         return note + (this.props.octave + 2) * 12;
     };
 

@@ -22,28 +22,28 @@ export default class KeyboardContainer extends React.Component {
                     activeNotes={activeNotes}
                     enabled={enabled}
                 />
-                {activeNotes.map(noteNum => (
+                {activeNotes.map((noteNum) => (
                     <Note noteNum={noteNum} key={noteNum} />
                 ))}
             </>
         );
     };
 
-    noteOn = noteNum => {
+    noteOn = (noteNum) => {
         const { midiOutputService } = this.props;
 
         if (midiOutputService) {
-            this.setState(state => ({
+            this.setState((state) => ({
                 activeNotes: _.union(state.activeNotes, [noteNum]),
             }));
         }
     };
 
-    noteOff = noteNum => {
+    noteOff = (noteNum) => {
         const { midiOutputService } = this.props;
 
         if (midiOutputService) {
-            this.setState(state => ({
+            this.setState((state) => ({
                 activeNotes: _.without(state.activeNotes, noteNum),
             }));
         }

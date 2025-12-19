@@ -1,4 +1,3 @@
-import React from 'react';
 import ColumnsLayout from '../../ColumnsLayout/ColumnsLayout';
 import TitledGroup from '../../TitledGroup/TitledGroup';
 import classNames from 'classnames';
@@ -12,7 +11,7 @@ import WaveGrid from '../../WaveGrid/WaveGrid';
 import './OPLOpParams.css';
 import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 
-const WaveButton = props => (
+const WaveButton = (props) => (
     <ParamButton
         path={`${Modes.OPL}.operators[${props.opIndex}].ws`}
         set={props.shape}
