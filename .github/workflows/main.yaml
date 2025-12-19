@@ -10,17 +10,17 @@ jobs:
       NTSLD_EMSDK_VERSION: 3.1.41
     steps:
       - name: Check out notesalad-editor
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           path: notesalad-editor
       - name: Check out notesalad
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           repository: danielrfry/notesalad
           submodules: recursive
           path: notesalad
       - name: Check out emsdk
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           repository: emscripten-core/emsdk
           path: emsdk
@@ -42,7 +42,7 @@ jobs:
         env:
           PUBLIC_URL: /notesalad-editor
       - name: Archive build products
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: notesalad-editor
           path: notesalad-editor/build/
@@ -50,16 +50,16 @@ jobs:
     name: Publish
     if: github.repository == 'danielrfry/notesalad-editor' && github.ref == 'refs/heads/main'
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out base revision
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: gh-pages-base
       - name: Create new gh-pages branch
         run: git branch -f gh-pages && git checkout gh-pages
       - name: Download build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v7
         with:
           name: notesalad-editor
       - name: Set Git identity
