@@ -1,14 +1,13 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Popover } from '@headlessui/react';
 
 import './CustomMenu.css';
 
-const CustomMenu = React.forwardRef((props, ref) => (
+const CustomMenu = ({ ref, children }) => (
     <div ref={ref} className="custom-menu">
-        {props.children}
+        {children}
     </div>
-));
+);
 
 const CustomMenuItem = ({ children, icon, onClick }) => (
     <Popover.Button as="button" className="custom-menu-item" onClick={onClick}>

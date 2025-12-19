@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react';
 
 import './CustomDialog.css';
@@ -26,20 +25,18 @@ CustomDialog.ButtonGroup = ({ children }) => (
     <div className="custom-dialog__button-group">{children}</div>
 );
 
-CustomDialog.Button = React.forwardRef(
-    ({ isDefault, children, ...otherProps }, ref) => (
-        <Button
-            {...otherProps}
-            highlighted={isDefault}
-            secondary
-            small
-            hover
-            extraClasses="custom-dialog__button"
-            ref={ref}
-        >
-            {children}
-        </Button>
-    )
+CustomDialog.Button = ({ isDefault, children, ref, ...otherProps }) => (
+    <Button
+        {...otherProps}
+        highlighted={isDefault}
+        secondary
+        small
+        hover
+        extraClasses="custom-dialog__button"
+        ref={ref}
+    >
+        {children}
+    </Button>
 );
 
 export default CustomDialog;

@@ -1,8 +1,8 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 
 import './FileBrowser.css';
 
-const FileBrowser = forwardRef(({ accept, onFileSelected }, ref) => {
+const FileBrowser = ({ accept, onFileSelected, ref }) => {
     const formRef = useRef();
     const inputRef = useRef();
     let clearing = false;
@@ -30,6 +30,6 @@ const FileBrowser = forwardRef(({ accept, onFileSelected }, ref) => {
             />
         </form>
     );
-});
+};
 
 export default FileBrowser;
