@@ -7,7 +7,8 @@ export const EMULATOR_STATE_CLOSED = 'closed';
 export const EMULATOR_STATE_SUSPENDED = 'suspended';
 export const EMULATOR_STATE_RUNNING = 'running';
 
-const LIBNOTESALAD_PATH = '/static/js/libnotesalad.js';
+const LIBNOTESALAD_PATH =
+    import.meta.env.BASE_URL + 'static/js/libnotesalad.js';
 
 export default class EmulatorBase extends EventTarget {
     constructor() {
@@ -66,6 +67,7 @@ export default class EmulatorBase extends EventTarget {
         });
 
     _doOpen = async () => {
+        console.log('LIBNOTESALAD_PATH:', LIBNOTESALAD_PATH);
         this.audioContext = createAudioContext(this._getAudioContextOptions());
         await initAudioContext(this.audioContext, LIBNOTESALAD_PATH);
         this.audioContext.onstatechange = this._updateState;
@@ -103,7 +105,7 @@ export default class EmulatorBase extends EventTarget {
             }
         });
 
-    send = data => this.emulatorNodeWrapper.writeMIDI([{ time: 0, data }]);
+    send = (data) => this.emulatorNodeWrapper.writeMIDI([{ time: 0, data }]);
 
     _createEmulatorNodeWrapper = () => {
         // Abstract
@@ -113,7 +115,7 @@ export default class EmulatorBase extends EventTarget {
         return { sampleRate: 48000 };
     }
 
-    _handleReceiveMIDI = msgData => {
+    _handleReceiveMIDI = (msgData) => {
         const e = new Event('midimessage');
         e.receivedTime = performance.now();
         e.data = msgData;

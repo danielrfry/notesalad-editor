@@ -6,7 +6,8 @@ import GitHubIcon from '../GitHubIcon/GitHubIcon';
 
 import './AboutDialog.css';
 
-const THIRD_PARTY_LICENCES_URL = '/3rdpartylicences.html';
+const THIRD_PARTY_LICENCES_URL =
+    import.meta.env.BASE_URL + '3rdpartylicences.html';
 
 const AboutDialog = ({ open, onClose }) => {
     const initialFocusRef = useRef();
