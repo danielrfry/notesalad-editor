@@ -5,68 +5,47 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
 import Button from '../Button/Button';
 import './PageControl.css';
+import { Transition } from '@headlessui/react';
 
 const PageControlButton = ({ right, visible, onClick }) => {
     const className = classNames(
-        'page-control__button',
-        `page-control__button-${right ? 'right' : 'left'}`,
-        { 'page-control__button--hidden': !visible }
+        'page-control__button-box',
+        `page-control__button-box--${right ? 'right' : 'left'}`
     );
     const icon = right ? faChevronRight : faChevronLeft;
     return (
-        <CSSTransition
-            timeout={500}
-            in={visible}
-            classNames="page-control__button"
-        >
-            <div className={className}>
-                <Button onClick={onClick}>
-                    <FontAwesomeIcon icon={icon} />
-                </Button>
-            </div>
-        </CSSTransition>
+        <Transition show={visible} as="div" className={className}>
+            <Button onClick={onClick}>
+                <FontAwesomeIcon icon={icon} />
+            </Button>
+        </Transition>
     );
 };
 
 export default class PageControl extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { transitionRight: undefined, pageNo: 0 };
+        this.state = { pageNo: 0 };
     }
 
     render = () => {
         const { children } = this.props;
-        const { transitionRight, pageNo } = this.state;
+        const { pageNo } = this.state;
         return (
             <div className="page-control">
                 <PageControlButton
-                    visible={pageNo !== 0}
+                    visible={pageNo != 0}
                     onClick={this._handlePreviousPageClick}
                 />
-                <div
-                    className={`page-control__content ${this._getDirectionClass(
-                        transitionRight
-                    )}`}
-                >
+                <div className="page-control__content" style={{ transform: `translateX(-${pageNo * 100}%)` }}>
                     {children.map((child, index) => (
-                        <CSSTransition
-                            key={index}
-                            in={index === pageNo}
-                            timeout={500}
-                            classNames="page-control__page"
-                        >
-                            <div
-                                className={classNames('page-control__page', {
-                                    'page-control__page--hidden':
-                                        index !== pageNo,
-                                })}
-                            >
-                                {child}
-                            </div>
-                        </CSSTransition>
+                        <div key={index} className={classNames('page-control__page',
+                            { 'page-control__page--hidden': index !== pageNo }
+                        )}>
+                            {child}
+                        </div>
                     ))}
                 </div>
                 <PageControlButton
@@ -76,28 +55,6 @@ export default class PageControl extends React.Component {
                 />
             </div>
         );
-    };
-
-    componentDidUpdate = (_, prevState) => {
-        const oldPageNo = prevState.pageNo;
-        const newPageNo = this.state.pageNo;
-        if (oldPageNo !== newPageNo) {
-            if (oldPageNo === undefined) {
-                this.setState({ transitionRight: undefined });
-            } else {
-                this.setState({ transitionRight: oldPageNo > newPageNo });
-            }
-        }
-    };
-
-    _getDirectionClass = (direction) => {
-        if (direction === undefined) {
-            return '';
-        } else if (direction) {
-            return 'page-control--transition-right';
-        } else {
-            return 'page-control--transition-left';
-        }
     };
 
     _handleNextPageClick = () => {
