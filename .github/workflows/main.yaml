@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: notesalad-editor
-          path: notesalad-editor/build/
+          path: notesalad-editor/dist/
   publish:
     name: Publish
     if: github.repository == 'danielrfry/notesalad-editor' && github.ref == 'refs/heads/main'
