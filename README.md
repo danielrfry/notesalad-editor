@@ -29,7 +29,7 @@ npm link @danielrfry/notesalad
 Start the development server:
 
 ```
-npm run start
+npm run dev
 ```
 
 To create a production build suitable for deployment:
@@ -38,7 +38,7 @@ To create a production build suitable for deployment:
 npm run build
 ```
 
-The build output is placed in the `build` subdirectory.
+The build output is placed in the `dist` subdirectory.
 
 ## Using with sequencers
 
