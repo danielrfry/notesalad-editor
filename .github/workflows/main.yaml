@@ -7,7 +7,7 @@ jobs:
     name: Build
     runs-on: ubuntu-24.04
     env:
-      NTSLD_EMSDK_VERSION: 3.1.41
+      NTSLD_EMSDK_VERSION: 4.0.22
     steps:
       - name: Check out notesalad-editor
         uses: actions/checkout@v6
@@ -37,7 +37,7 @@ jobs:
         run: npm link
         working-directory: notesalad/web
       - name: Build notesalad-editor
-        run: npm install && npm link @danielrfry/notesalad && npm run build
+        run: npm install && npm link @danielrfry/notesalad && npm run build -- --base=/notesalad-editor/
         working-directory: notesalad-editor
         env:
           PUBLIC_URL: /notesalad-editor
