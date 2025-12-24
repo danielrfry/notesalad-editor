@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import KeyboardOctave from './KeyboardOctave/KeyboardOctave';
 import MusicalTyping from './MusicalTyping/MusicalTyping';
-import { shallowCompare, clamp } from '../../utils';
+import { clamp } from '../../utils';
 import classNames from 'classnames';
 
 import './Keyboard.css';
@@ -11,61 +11,58 @@ const FIRST_OCTAVE = -2;
 const LAST_OCTAVE = 8;
 const NUM_OCTAVES = LAST_OCTAVE - FIRST_OCTAVE + 1;
 
-class Keyboard extends React.Component {
-    constructor(props) {
-        super(props);
+const Keyboard = ({ onNoteOff, onNoteOn, activeNotes, enabled }) => {
+    const [keyboardOctave, setKeyboardOctave] = React.useState(3);
+    const selectedNotes = React.useRef({});
+    const octaveRefs = React.useRef(
+        _.times(NUM_OCTAVES, () => React.createRef())
+    );
 
-        this.state = { keyboardOctave: 3 };
-        this.selectedNotes = {};
-        this.octaveRefs = _.times(NUM_OCTAVES, () => React.createRef());
-    }
-
-    componentDidMount = () => {
-        this.scrollToOctave(this.state.keyboardOctave, true);
-    };
-
-    componentDidUpdate = (prevProps, prevState) => {
-        if (this.state.keyboardOctave !== prevState.keyboardOctave) {
-            this.scrollToOctave(this.state.keyboardOctave, false);
+    const scrollToOctave = (octave, centre) => {
+        let i = octave - FIRST_OCTAVE;
+        if (octaveRefs.current[i]) {
+            const el = octaveRefs.current[i].current;
+            if (el) {
+                el.scrollIntoView({ block: centre ? 'center' : 'nearest' });
+            }
         }
     };
 
-    handlePointerDown = (e) => {
+    const handlePointerDown = (e) => {
         e.preventDefault();
-        const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
-        this.selectNote(noteAtPointer, e.pointerId);
+        const noteAtPointer = getNoteAtLocation(e.clientX, e.clientY);
+        selectNote(noteAtPointer, e.pointerId);
     };
 
-    handlePointerMove = (e) => {
-        if (e.pointerId in this.selectedNotes) {
+    const handlePointerMove = (e) => {
+        if (e.pointerId in selectedNotes.current) {
             e.preventDefault();
-            const noteAtPointer = this.getNoteAtLocation(e.clientX, e.clientY);
-            this.selectNote(noteAtPointer, e.pointerId);
+            const noteAtPointer = getNoteAtLocation(e.clientX, e.clientY);
+            selectNote(noteAtPointer, e.pointerId);
         }
     };
 
-    handlePointerUp = (e) => {
-        if (e.pointerId in this.selectedNotes) {
+    const handlePointerUp = (e) => {
+        if (e.pointerId in selectedNotes.current) {
             e.preventDefault();
-            this.selectNote(undefined, e.pointerId);
+            selectNote(undefined, e.pointerId);
         }
     };
 
-    selectNote = (noteNum, pointerId) => {
+    const selectNote = (noteNum, pointerId) => {
         if (noteNum < 0 || noteNum > 127) {
             noteNum = undefined;
         }
 
-        const selNote = this.selectedNotes[pointerId];
+        const selNote = selectedNotes.current[pointerId];
         if (selNote !== noteNum) {
-            const { onNoteOff, onNoteOn } = this.props;
             if (selNote !== undefined && selNote !== null) {
                 onNoteOff(selNote);
             }
             if (noteNum === undefined) {
-                delete this.selectedNotes[pointerId];
+                delete selectedNotes.current[pointerId];
             } else {
-                this.selectedNotes[pointerId] = noteNum;
+                selectedNotes.current[pointerId] = noteNum;
             }
             if (noteNum !== undefined && noteNum !== null) {
                 onNoteOn(noteNum);
@@ -73,7 +70,7 @@ class Keyboard extends React.Component {
         }
     };
 
-    getNoteAtLocation = (x, y) => {
+    const getNoteAtLocation = (x, y) => {
         const el = document.elementFromPoint(x, y);
         if (el) {
             const noteNum = el.dataset.notenum;
@@ -83,86 +80,61 @@ class Keyboard extends React.Component {
         }
     };
 
-    handleOctaveDown = () => {
-        this.setState({
-            keyboardOctave: clamp(
-                FIRST_OCTAVE,
-                LAST_OCTAVE,
-                this.state.keyboardOctave - 1
-            ),
-        });
+    const handleOctaveDown = () => {
+        setKeyboardOctave(clamp(FIRST_OCTAVE, LAST_OCTAVE, keyboardOctave - 1));
     };
 
-    handleOctaveUp = () => {
-        this.setState({
-            keyboardOctave: clamp(
-                FIRST_OCTAVE,
-                LAST_OCTAVE,
-                this.state.keyboardOctave + 1
-            ),
-        });
+    const handleOctaveUp = () => {
+        setKeyboardOctave(clamp(FIRST_OCTAVE, LAST_OCTAVE, keyboardOctave + 1));
     };
 
-    render = () => {
-        const octaves = [];
-        const { activeNotes, enabled } = this.props;
+    React.useEffect(() => {
+        scrollToOctave(keyboardOctave, true);
+    }, []);
 
-        for (let i = NUM_OCTAVES - 1; i >= 0; i--) {
-            const octave = FIRST_OCTAVE + i;
-            octaves.push(
-                <div
-                    key={`octave_container_${octave}`}
-                    ref={this.octaveRefs[i]}
-                >
-                    <KeyboardOctave
-                        key={`octave_${octave}`}
-                        octave={octave}
-                        activeNotes={activeNotes}
-                        highlighted={octave === this.state.keyboardOctave}
-                    />
-                </div>
-            );
-        }
+    React.useEffect(
+        () => scrollToOctave(keyboardOctave, false),
+        [keyboardOctave]
+    );
 
-        return (
-            <div
-                className="keyboard__scroll-container"
-                tabIndex={enabled ? 0 : -1}
-            >
-                <MusicalTyping
-                    octave={this.state.keyboardOctave}
-                    onNoteOn={this.props.onNoteOn}
-                    onNoteOff={this.props.onNoteOff}
-                    onOctaveUp={this.handleOctaveUp}
-                    onOctaveDown={this.handleOctaveDown}
+    const octaves = [];
+
+    for (let i = NUM_OCTAVES - 1; i >= 0; i--) {
+        const octave = FIRST_OCTAVE + i;
+        octaves.push(
+            <div key={`octave_container_${octave}`} ref={octaveRefs.current[i]}>
+                <KeyboardOctave
+                    key={`octave_${octave}`}
+                    octave={octave}
+                    activeNotes={activeNotes}
+                    highlighted={octave === keyboardOctave}
                 />
-                <div
-                    className={classNames('keyboard__keyboard', {
-                        'ui-element--enabled': enabled,
-                        'ui-element--disabled': !enabled,
-                    })}
-                    onPointerDown={this.handlePointerDown}
-                    onPointerMove={this.handlePointerMove}
-                    onPointerUp={this.handlePointerUp}
-                >
-                    {octaves}
-                </div>
             </div>
         );
-    };
+    }
 
-    scrollToOctave = (octave, centre) => {
-        let i = octave - FIRST_OCTAVE;
-        if (this.octaveRefs[i]) {
-            const el = this.octaveRefs[i].current;
-            if (el) {
-                el.scrollIntoView({ block: centre ? 'center' : 'nearest' });
-            }
-        }
-    };
+    return (
+        <div className="keyboard__scroll-container" tabIndex={enabled ? 0 : -1}>
+            <MusicalTyping
+                octave={keyboardOctave}
+                onNoteOn={onNoteOn}
+                onNoteOff={onNoteOff}
+                onOctaveUp={handleOctaveUp}
+                onOctaveDown={handleOctaveDown}
+            />
+            <div
+                className={classNames('keyboard__keyboard', {
+                    'ui-element--enabled': enabled,
+                    'ui-element--disabled': !enabled,
+                })}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+            >
+                {octaves}
+            </div>
+        </div>
+    );
+};
 
-    shouldComponentUpdate = (nextProps, nextState) =>
-        !shallowCompare(this.props, nextProps) ||
-        !shallowCompare(this.state, nextState);
-}
 export default Keyboard;
