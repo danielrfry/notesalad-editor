@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import _ from 'lodash';
 
 const keyNoteMap = {
@@ -20,64 +20,72 @@ const keyNoteMap = {
     KeyP: 15,
 };
 
-export default class MusicalTyping extends React.Component {
-    constructor(props) {
-        super(props);
-        this.activeNotes = [];
-    }
+const MusicalTyping = ({
+    onNoteOn,
+    onNoteOff,
+    onOctaveUp,
+    onOctaveDown,
+    octave,
+}) => {
+    const activeNotes = useRef([]);
 
-    componentDidMount = () => {
-        document.addEventListener('keydown', this.handleKeyDown);
-        document.addEventListener('keyup', this.handleKeyUp);
-    };
-
-    componentWillUnmount = () => {
-        document.removeEventListener('keydown', this.handleKeyDown);
-        document.removeEventListener('keyup', this.handleKeyUp);
-    };
-
-    handleKeyDown = (e) => {
-        if (!e.repeat) {
-            if (e.code === 'BracketLeft') {
-                this.cancelActiveNotes();
-                this.props.onOctaveDown();
-            } else if (e.code === 'BracketRight') {
-                this.cancelActiveNotes();
-                this.props.onOctaveUp();
-            } else {
-                const note = keyNoteMap[e.code];
-                if (note !== undefined && !this.activeNotes.includes(note)) {
-                    const midiNote = this.getMIDINote(note);
-                    if (midiNote < 128) {
-                        this.activeNotes.push(midiNote);
-                        this.props.onNoteOn(midiNote);
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!e.repeat) {
+                if (e.code === 'BracketLeft') {
+                    cancelActiveNotes();
+                    onOctaveDown();
+                } else if (e.code === 'BracketRight') {
+                    cancelActiveNotes();
+                    onOctaveUp();
+                } else {
+                    const note = keyNoteMap[e.code];
+                    if (
+                        note !== undefined &&
+                        !activeNotes.current.includes(note)
+                    ) {
+                        const midiNote = getMIDINote(note);
+                        if (midiNote < 128) {
+                            activeNotes.current.push(midiNote);
+                            onNoteOn(midiNote);
+                        }
                     }
                 }
             }
-        }
-    };
+        };
 
-    handleKeyUp = (e) => {
-        const note = keyNoteMap[e.code];
-        if (note !== undefined) {
-            const midiNote = this.getMIDINote(note);
-            if (this.activeNotes.includes(midiNote)) {
-                _.pull(this.activeNotes, midiNote);
-                this.props.onNoteOff(midiNote);
+        const handleKeyUp = (e) => {
+            const note = keyNoteMap[e.code];
+            if (note !== undefined) {
+                const midiNote = getMIDINote(note);
+                if (activeNotes.current.includes(midiNote)) {
+                    _.pull(activeNotes.current, midiNote);
+                    onNoteOff(midiNote);
+                }
             }
-        }
-    };
+        };
 
-    getMIDINote = (note) => {
-        return note + (this.props.octave + 2) * 12;
-    };
+        const getMIDINote = (note) => {
+            return note + (octave + 2) * 12;
+        };
 
-    cancelActiveNotes = () => {
-        for (let note of this.activeNotes) {
-            this.props.onNoteOff(note);
-        }
-        this.activeNotes = [];
-    };
+        const cancelActiveNotes = () => {
+            for (let note of activeNotes.current) {
+                onNoteOff(note);
+            }
+            activeNotes.current = [];
+        };
 
-    render = () => <></>;
-}
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
+        };
+    }, [onNoteOn, onNoteOff, onOctaveUp, onOctaveDown, octave]);
+
+    return null;
+};
+
+export default MusicalTyping;
