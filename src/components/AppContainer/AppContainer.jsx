@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useState } from 'react';
 import { setMode } from '../../redux/patchEditorSlice';
 import { connect } from 'react-redux';
 import MIDIEnvironment from '../MIDI/MIDIEnvironment/MIDIEnvironment';
@@ -13,9 +13,9 @@ import AboutDialogContainer from '../AboutDialogContainer/AboutDialogContainer';
 import AppControllerProvider from '../AppControllerProvider/AppControllerProvider';
 
 const AppContainer = ({ dispatch, mode, preferredDevices }) => {
-    const [ready, setReady] = React.useState(false);
-    const [suspended, setSuspended] = React.useState(false);
-    const [deviceList, setDeviceList] = React.useState({
+    const [ready, setReady] = useState(false);
+    const [suspended, setSuspended] = useState(false);
+    const [deviceList, setDeviceList] = useState({
         inputs: [],
         outputs: [],
     });
