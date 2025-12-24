@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useDebounce } from '../../../hooks/debounce';
 import OPLEmulator from '../../../services/OPL/OPLEmulator';
 import OPLEmulatorInputPort from '../../../services/OPL/OPLEmulatorInputPort';
@@ -6,11 +6,12 @@ import OPLEmulatorOutputPort from '../../../services/OPL/OPLEmulatorOutputPort';
 import OPMEmulator from '../../../services/OPM/OPMEmulator';
 import OPMEmulatorInputPort from '../../../services/OPM/OPMEmulatorInputPort';
 import OPMEmulatorOutputPort from '../../../services/OPM/OPMEmulatorOutputPort';
+import _ from 'lodash';
 
-const getDeviceListFromMIDIAccess = midiAccess => ({
-    inputs: [...midiAccess.inputs.values()],
-    outputs: [...midiAccess.outputs.values()],
-});
+const getDeviceListFromMIDIAccess = (midiAccess) => [
+    ...midiAccess.inputs.values(),
+    ...midiAccess.outputs.values(),
+];
 
 const createEmulatedDevices = () => {
     const oplEmulator = new OPLEmulator();
@@ -21,59 +22,64 @@ const createEmulatedDevices = () => {
     const opmInputPort = new OPMEmulatorInputPort(opmEmulator);
     const opmOutputPort = new OPMEmulatorOutputPort(opmEmulator);
 
-    return {
-        inputs: [oplInputPort, opmInputPort],
-        outputs: [oplOutputPort, opmOutputPort],
-    };
+    return [oplInputPort, opmInputPort, oplOutputPort, opmOutputPort];
 };
 
 const MIDIDeviceEnumerator = ({ setDeviceList }) => {
     const [midiAccess, setMIDIAccess] = useState();
-    const [physicalDevices, setPhysicalDevices] = useState({
-        inputs: [],
-        outputs: [],
-    });
-    const [emulatedDevices, setEmulatedDevices] = useState({
-        inputs: [],
-        outputs: [],
-    });
+    const emulatedDevices = useRef(createEmulatedDevices());
+    const physicalDevices = useRef([]);
 
     const debouncedSetDeviceList = useDebounce(setDeviceList, 250);
 
+    const updateDeviceList = useCallback(() => {
+        const allDevices = [
+            ...emulatedDevices.current,
+            ...physicalDevices.current,
+        ];
+        debouncedSetDeviceList({
+            inputs: allDevices.filter((d) => d.type === 'input'),
+            outputs: allDevices.filter((d) => d.type === 'output'),
+        });
+    }, [debouncedSetDeviceList]);
+
     // Component mount/unmount effects
     useEffect(() => {
-        setEmulatedDevices(createEmulatedDevices());
         if (navigator.requestMIDIAccess) {
             navigator.requestMIDIAccess({ sysex: true }).then(setMIDIAccess);
         }
-    }, []);
+        updateDeviceList();
+    }, [updateDeviceList]);
 
     // midiAccess change effects
     useEffect(() => {
-        const updateDeviceList = () => {
-            setPhysicalDevices(getDeviceListFromMIDIAccess(midiAccess));
+        const updatePhysicalDeviceList = () => {
+            const oldDeviceIDs = _.sortBy(
+                _.map(physicalDevices.current, (d) => d.id)
+            );
+            const newDevices = getDeviceListFromMIDIAccess(midiAccess);
+            const newDeviceIDs = _.sortBy(_.map(newDevices, (d) => d.id));
+            if (!_.isEqual(oldDeviceIDs, newDeviceIDs)) {
+                physicalDevices.current = newDevices;
+                updateDeviceList();
+            }
+            physicalDevices.current = newDevices;
         };
 
         if (midiAccess) {
-            midiAccess.addEventListener('statechange', updateDeviceList);
-            updateDeviceList();
+            midiAccess.addEventListener(
+                'statechange',
+                updatePhysicalDeviceList
+            );
+            updatePhysicalDeviceList();
             return () => {
-                midiAccess.removeEventListener('statechange', updateDeviceList);
+                midiAccess.removeEventListener(
+                    'statechange',
+                    updatePhysicalDeviceList
+                );
             };
         }
     }, [midiAccess]);
-
-    // Device list change effects
-    useEffect(() => {
-        debouncedSetDeviceList &&
-            debouncedSetDeviceList({
-                inputs: [...emulatedDevices.inputs, ...physicalDevices.inputs],
-                outputs: [
-                    ...emulatedDevices.outputs,
-                    ...physicalDevices.outputs,
-                ],
-            });
-    }, [physicalDevices, emulatedDevices, debouncedSetDeviceList]);
 
     return null;
 };

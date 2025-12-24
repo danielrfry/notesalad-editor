@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { setMode } from '../../redux/patchEditorSlice';
 import { connect } from 'react-redux';
 import MIDIEnvironment from '../MIDI/MIDIEnvironment/MIDIEnvironment';
@@ -28,9 +28,12 @@ const AppContainer = ({ dispatch, mode, preferredDevices }) => {
         setSuspended(suspended);
     };
 
-    const _handleDeviceListChanged = (newDeviceList) => {
-        setDeviceList(newDeviceList);
-    };
+    const _handleDeviceListChanged = useCallback(
+        (newDeviceList) => {
+            setDeviceList(newDeviceList);
+        },
+        [setDeviceList]
+    );
 
     const { synthInputPort, synthOutputPort, controlInputPort } =
         selectMIDIDevices(deviceList, mode, preferredDevices);
