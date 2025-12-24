@@ -3,49 +3,38 @@ import Keyboard from '../Keyboard/Keyboard';
 import _ from 'lodash';
 import Note from '../MIDI/Note/Note';
 
-export default class KeyboardContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeNotes: [],
-        };
-    }
+const KeyboardContainer = ({ midiOutputService, enabled }) => {
+    const [activeNotes, setActiveNotes] = React.useState([]);
 
-    render = () => {
-        const { enabled } = this.props;
-        const { activeNotes } = this.state;
-        return (
-            <>
-                <Keyboard
-                    onNoteOn={this.noteOn}
-                    onNoteOff={this.noteOff}
-                    activeNotes={activeNotes}
-                    enabled={enabled}
-                />
-                {activeNotes.map((noteNum) => (
-                    <Note noteNum={noteNum} key={noteNum} />
-                ))}
-            </>
-        );
-    };
-
-    noteOn = (noteNum) => {
-        const { midiOutputService } = this.props;
-
+    const noteOn = (noteNum) => {
         if (midiOutputService) {
-            this.setState((state) => ({
-                activeNotes: _.union(state.activeNotes, [noteNum]),
-            }));
+            setActiveNotes((prevActiveNotes) =>
+                _.union(prevActiveNotes, [noteNum])
+            );
         }
     };
 
-    noteOff = (noteNum) => {
-        const { midiOutputService } = this.props;
-
+    const noteOff = (noteNum) => {
         if (midiOutputService) {
-            this.setState((state) => ({
-                activeNotes: _.without(state.activeNotes, noteNum),
-            }));
+            setActiveNotes((prevActiveNotes) =>
+                _.without(prevActiveNotes, noteNum)
+            );
         }
     };
-}
+
+    return (
+        <>
+            <Keyboard
+                onNoteOn={noteOn}
+                onNoteOff={noteOff}
+                activeNotes={activeNotes}
+                enabled={enabled}
+            />
+            {activeNotes.map((noteNum) => (
+                <Note noteNum={noteNum} key={noteNum} />
+            ))}
+        </>
+    );
+};
+
+export default KeyboardContainer;
