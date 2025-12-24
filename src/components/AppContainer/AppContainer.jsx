@@ -12,7 +12,7 @@ import ExportSysExDialogContainer from '../ExportSysExDialogContainer/ExportSysE
 import AboutDialogContainer from '../AboutDialogContainer/AboutDialogContainer';
 import AppControllerProvider from '../AppControllerProvider/AppControllerProvider';
 
-const AppContainer = (props) => {
+const AppContainer = ({ dispatch, mode, preferredDevices }) => {
     const [ready, setReady] = React.useState(false);
     const [suspended, setSuspended] = React.useState(false);
     const [deviceList, setDeviceList] = React.useState({
@@ -32,7 +32,6 @@ const AppContainer = (props) => {
         setDeviceList(newDeviceList);
     };
 
-    const { dispatch, mode, preferredDevices } = props;
     const { synthInputPort, synthOutputPort, controlInputPort } =
         selectMIDIDevices(deviceList, mode, preferredDevices);
     const selectMode = (newMode) => dispatch(setMode(newMode));
