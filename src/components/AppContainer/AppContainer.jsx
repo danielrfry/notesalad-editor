@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { setMode } from '../../redux/patchEditorSlice';
 import { connect } from 'react-redux';
 import MIDIEnvironment from '../MIDI/MIDIEnvironment/MIDIEnvironment';
@@ -12,73 +12,60 @@ import ExportSysExDialogContainer from '../ExportSysExDialogContainer/ExportSysE
 import AboutDialogContainer from '../AboutDialogContainer/AboutDialogContainer';
 import AppControllerProvider from '../AppControllerProvider/AppControllerProvider';
 
-class AppContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ready: false,
-            suspended: false,
-            deviceList: { inputs: [], outputs: [] },
-        };
-    }
+const AppContainer = (props) => {
+    const [ready, setReady] = React.useState(false);
+    const [suspended, setSuspended] = React.useState(false);
+    const [deviceList, setDeviceList] = React.useState({
+        inputs: [],
+        outputs: [],
+    });
 
-    _handleReadyChanged = (ready) => {
-        this.setState({ ready });
+    const _handleReadyChanged = (ready) => {
+        setReady(ready);
     };
 
-    _handleSuspendedChanged = (suspended) => {
-        this.setState({ suspended });
+    const _handleSuspendedChanged = (suspended) => {
+        setSuspended(suspended);
     };
 
-    _handleDeviceListChanged = (newDeviceList) => {
-        this.setState({ deviceList: newDeviceList });
+    const _handleDeviceListChanged = (newDeviceList) => {
+        setDeviceList(newDeviceList);
     };
 
-    render = () => {
-        const { mode, preferredDevices } = this.props;
-        const { ready, suspended, deviceList } = this.state;
-        const { synthInputPort, synthOutputPort, controlInputPort } =
-            selectMIDIDevices(deviceList, mode, preferredDevices);
+    const { dispatch, mode, preferredDevices } = props;
+    const { synthInputPort, synthOutputPort, controlInputPort } =
+        selectMIDIDevices(deviceList, mode, preferredDevices);
+    const selectMode = (newMode) => dispatch(setMode(newMode));
 
-        return (
-            <>
-                <MIDIDeviceEnumerator
-                    setDeviceList={this._handleDeviceListChanged}
-                />
-                <MIDIEnvironment
-                    synthInputPort={synthInputPort}
-                    synthOutputPort={synthOutputPort}
-                    controlInputPort={controlInputPort}
-                    onReadyChanged={this._handleReadyChanged}
-                    onSuspendedChanged={this._handleSuspendedChanged}
-                    mode={mode}
-                >
-                    <ConsoleDevTools />
-                    <AppControllerProvider>
-                        <App
-                            mode={mode}
-                            onSelectMode={this.selectMode}
-                            ready={ready}
-                            suspended={suspended}
-                            onResumeAudioContext={() =>
-                                synthOutputPort?.resume()
-                            }
-                        />
-                    </AppControllerProvider>
-                    <MIDIPatchContainer mode={mode} />
-                    <SettingsDialogContainer devices={deviceList} />
-                    <ExportSysExDialogContainer
-                        open={true}
-                        onClose={() => {}}
+    return (
+        <>
+            <MIDIDeviceEnumerator setDeviceList={_handleDeviceListChanged} />
+            <MIDIEnvironment
+                synthInputPort={synthInputPort}
+                synthOutputPort={synthOutputPort}
+                controlInputPort={controlInputPort}
+                onReadyChanged={_handleReadyChanged}
+                onSuspendedChanged={_handleSuspendedChanged}
+                mode={mode}
+            >
+                <ConsoleDevTools />
+                <AppControllerProvider>
+                    <App
+                        mode={mode}
+                        onSelectMode={selectMode}
+                        ready={ready}
+                        suspended={suspended}
+                        onResumeAudioContext={() => synthOutputPort?.resume()}
                     />
-                </MIDIEnvironment>
-                <AboutDialogContainer />
-            </>
-        );
-    };
-
-    selectMode = (newMode) => this.props.dispatch(setMode(newMode));
-}
+                </AppControllerProvider>
+                <MIDIPatchContainer mode={mode} />
+                <SettingsDialogContainer devices={deviceList} />
+                <ExportSysExDialogContainer open={true} onClose={() => {}} />
+            </MIDIEnvironment>
+            <AboutDialogContainer />
+        </>
+    );
+};
 
 const mapStateToProps = (state) => ({
     mode: state.patchEditor.mode,
