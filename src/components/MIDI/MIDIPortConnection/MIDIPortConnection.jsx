@@ -1,6 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-const MIDIPortConnection = ({ port = undefined, onPortStateChanged = () => {} }) => {
+var nextInstanceId = 1;
+
+const MIDIPortConnection = ({
+    port = undefined,
+    onPortStateChanged = undefined,
+}) => {
     useEffect(() => {
         if (port) {
             console.info(
