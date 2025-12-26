@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { setMode } from '../../redux/patchEditorSlice';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MIDIEnvironment from '../MIDI/MIDIEnvironment/MIDIEnvironment';
 import { selectMIDIDevices } from '../../services/MIDIDeviceSelector';
 import MIDIDeviceEnumerator from '../MIDI/MIDIDeviceEnumerator/MIDIDeviceEnumerator';
@@ -11,8 +11,13 @@ import ConsoleDevTools from '../ConsoleDevTools/ConsoleDevTools';
 import ExportSysExDialogContainer from '../ExportSysExDialogContainer/ExportSysExDialogContainer';
 import AboutDialogContainer from '../AboutDialogContainer/AboutDialogContainer';
 import AppControllerProvider from '../AppControllerProvider/AppControllerProvider';
+import { selectMode, selectPreferredDevices } from '../../redux/selectors';
 
-const AppContainer = ({ dispatch, mode, preferredDevices }) => {
+const AppContainer = () => {
+    const mode = useSelector(selectMode);
+    const preferredDevices = useSelector(selectPreferredDevices);
+    const dispatch = useDispatch();
+
     const [ready, setReady] = useState(false);
     const [suspended, setSuspended] = useState(false);
     const [deviceList, setDeviceList] = useState({
@@ -37,7 +42,7 @@ const AppContainer = ({ dispatch, mode, preferredDevices }) => {
 
     const { synthInputPort, synthOutputPort, controlInputPort } =
         selectMIDIDevices(deviceList, mode, preferredDevices);
-    const selectMode = (newMode) => dispatch(setMode(newMode));
+    const handleSelectMode = (newMode) => dispatch(setMode(newMode));
 
     return (
         <>
@@ -54,7 +59,7 @@ const AppContainer = ({ dispatch, mode, preferredDevices }) => {
                 <AppControllerProvider>
                     <App
                         mode={mode}
-                        onSelectMode={selectMode}
+                        onSelectMode={handleSelectMode}
                         ready={ready}
                         suspended={suspended}
                         onResumeAudioContext={() => synthOutputPort?.resume()}
@@ -62,16 +67,11 @@ const AppContainer = ({ dispatch, mode, preferredDevices }) => {
                 </AppControllerProvider>
                 <MIDIPatchContainer mode={mode} />
                 <SettingsDialogContainer devices={deviceList} />
-                <ExportSysExDialogContainer open={true} onClose={() => {}} />
+                <ExportSysExDialogContainer open={true} onClose={() => { }} />
             </MIDIEnvironment>
             <AboutDialogContainer />
         </>
     );
 };
 
-const mapStateToProps = (state) => ({
-    mode: state.patchEditor.mode,
-    preferredDevices: state.settings.preferredDevices,
-});
-
-export default connect(mapStateToProps)(AppContainer);
+export default AppContainer;
