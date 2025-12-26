@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import {
     setPatchParam,
     togglePatchParam,
@@ -6,35 +5,40 @@ import {
 } from '../../redux/patchEditorSlice';
 import Button from './Button';
 import patchSchemaManager from '../../services/PatchSchemaManager';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const mapStateToProps = (state, ownProps) => {
-    const { path, set, toggle, toggleBit } = ownProps;
-    const value = patchSchemaManager.getParamValue(
-        path,
-        state.patchEditor.patch
-    );
-
+const getHighlighted = (set, toggle, toggleBit, value) => {
     if (toggleBit) {
-        return { highlighted: value & toggleBit };
+        return value & toggleBit;
     } else if (toggle) {
-        return { highlighted: !!value };
+        return !!value;
     } else {
-        return { highlighted: value === set };
+        return value === set;
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const { path, set, toggle, toggleBit } = ownProps;
+const ParamButton = ({ path, set, toggle, toggleBit, ...buttonProps }) => {
+    const dispatch = useDispatch();
 
-    if (toggleBit) {
-        return {
-            onClick: () => dispatch(togglePatchParamBit(path, toggleBit)),
-        };
-    } else if (toggle) {
-        return { onClick: () => dispatch(togglePatchParam(path)) };
-    } else {
-        return { onClick: () => dispatch(setPatchParam(path, set)) };
-    }
-};
+    const handleClick = useCallback(() => {
+        if (toggleBit) {
+            dispatch(togglePatchParamBit(path, toggleBit));
+        } else if (toggle) {
+            dispatch(togglePatchParam(path));
+        } else {
+            dispatch(setPatchParam(path, set));
+        }
+    }, [dispatch, path, set, toggle, toggleBit]);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+    const selectParamValue = useCallback((state) => {
+        return patchSchemaManager.getParamValue(path, state.patchEditor.patch);
+    }, [path]);
+
+    const paramValue = useSelector(selectParamValue);
+    const highlighted = getHighlighted(set, toggle, toggleBit, paramValue);
+
+    return <Button {...buttonProps} onClick={handleClick} highlighted={highlighted} />;
+}
+
+export default ParamButton;
