@@ -20,6 +20,9 @@ export default class EmulatorInputPortBase extends EmulatorPortBase {
     }
 
     _handleMIDIMessage = e => {
-        this.dispatchEvent(e);
+        const newEvent = new Event('midimessage');
+        newEvent.receivedTime = e.receivedTime;
+        newEvent.data = e.data;
+        this.dispatchEvent(newEvent);
     };
 }
