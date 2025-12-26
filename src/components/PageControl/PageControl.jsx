@@ -24,49 +24,47 @@ const PageControlButton = ({ right, visible, onClick }) => {
     );
 };
 
-export default class PageControl extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { pageNo: 0 };
-    }
+const PageControl = ({ children }) => {
+    const [pageNo, setPageNo] = React.useState(0);
 
-    render = () => {
-        const { children } = this.props;
-        const { pageNo } = this.state;
-        return (
-            <div className="page-control">
-                <PageControlButton
-                    visible={pageNo != 0}
-                    onClick={this._handlePreviousPageClick}
-                />
-                <div className="page-control__content" style={{ transform: `translateX(-${pageNo * 100}%)` }}>
-                    {children.map((child, index) => (
-                        <div key={index} className={classNames('page-control__page',
-                            { 'page-control__page--hidden': index !== pageNo }
-                        )}>
-                            {child}
-                        </div>
-                    ))}
-                </div>
-                <PageControlButton
-                    right
-                    visible={pageNo < children.length - 1}
-                    onClick={this._handleNextPageClick}
-                />
-            </div>
-        );
-    };
-
-    _handleNextPageClick = () => {
-        const { pageNo } = this.state;
-        const { children } = this.props;
+    const _handleNextPageClick = () => {
         const newPageNo = Math.min(children.length - 1, pageNo + 1);
-        this.setState({ pageNo: newPageNo });
+        setPageNo(newPageNo);
     };
 
-    _handlePreviousPageClick = () => {
-        const { pageNo } = this.state;
+    const _handlePreviousPageClick = () => {
         const newPageNo = Math.max(0, pageNo - 1);
-        this.setState({ pageNo: newPageNo });
+        setPageNo(newPageNo);
     };
-}
+
+    return (
+        <div className="page-control">
+            <PageControlButton
+                visible={pageNo != 0}
+                onClick={_handlePreviousPageClick}
+            />
+            <div
+                className="page-control__content"
+                style={{ transform: `translateX(-${pageNo * 100}%)` }}
+            >
+                {children.map((child, index) => (
+                    <div
+                        key={index}
+                        className={classNames('page-control__page', {
+                            'page-control__page--hidden': index !== pageNo,
+                        })}
+                    >
+                        {child}
+                    </div>
+                ))}
+            </div>
+            <PageControlButton
+                right
+                visible={pageNo < children.length - 1}
+                onClick={_handleNextPageClick}
+            />
+        </div>
+    );
+};
+
+export default PageControl;
