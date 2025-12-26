@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPreferredDevices } from '../../redux/settingsSlice';
 import { closeSettingsDialog } from '../../redux/uiStateSlice';
 import {
@@ -9,6 +9,7 @@ import {
     getDefaultMIDIDevices,
 } from '../../services/MIDIDeviceSelector';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
+import { selectMode, selectPreferredDevices } from '../../redux/selectors';
 
 const DEVICE_NONE = { id: DEVICE_ID_NONE, name: DEVICE_NAME_NONE };
 
@@ -61,14 +62,16 @@ const getDeviceInfoByID = (deviceList, id) => {
     return device ? { id: device.id, name: device.name } : {};
 };
 
+const selectDialogOpen = (state) => state.uiState.settingsDialogOpen;
+
 const SettingsDialogContainer = ({
-    mode,
-    open,
-    onClose,
     devices,
-    preferredDevices,
-    onSetPreferredDevices,
 }) => {
+    const dispatch = useDispatch();
+    const mode = useSelector(selectMode);
+    const open = useSelector(selectDialogOpen);
+    const preferredDevices = useSelector(selectPreferredDevices);
+
     const [selectedSynthOutputID, setSelectedSynthOutputID] = useState();
     const [selectedSynthInputID, setSelectedSynthInputID] = useState();
     const [selectedControlInputID, setSelectedControlInputID] = useState();
@@ -108,15 +111,14 @@ const SettingsDialogContainer = ({
                 selectedControlInputID
             ),
         };
-        onSetPreferredDevices(mode, newPreferredDevices);
+        dispatch(setPreferredDevices(mode, newPreferredDevices));
     }, [
         mode,
         filteredDevices,
         selectedSynthOutputID,
         selectedSynthInputID,
         selectedControlInputID,
-        onSetPreferredDevices,
-    ]);
+        dispatch]);
 
     const handleSynthOutputChanged = useCallback(
         (newSynthOutputID) => {
@@ -138,7 +140,7 @@ const SettingsDialogContainer = ({
         [setSelectedSynthOutputID, filteredDevices, setSelectedSynthInputID]
     );
 
-    const handleCloseClicked = useCallback(() => onClose(), [onClose]);
+    const handleCloseClicked = useCallback(() => dispatch(closeSettingsDialog()), [dispatch]);
 
     return (
         <SettingsDialog
@@ -156,17 +158,4 @@ const SettingsDialogContainer = ({
     );
 };
 
-const mapStateToProps = (state) => ({
-    mode: state.patchEditor.mode,
-    open: state.uiState.settingsDialogOpen,
-    preferredDevices: state.settings.preferredDevices,
-});
-const mapDispatchToProps = {
-    onClose: closeSettingsDialog,
-    onSetPreferredDevices: setPreferredDevices,
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SettingsDialogContainer);
+export default SettingsDialogContainer;
