@@ -1,22 +1,17 @@
 import { useCallback } from 'react';
 import AboutDialog from '../AboutDialog/AboutDialog';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeAboutDialog } from '../../redux/uiStateSlice';
 
-const AboutDialogContainer = ({ open, onClose }) => {
-    const handleCloseClicked = useCallback(() => onClose(), [onClose]);
+const selectAboutDialogOpen = (state) => state.uiState.aboutDialogOpen;
+
+const AboutDialogContainer = () => {
+    const open = useSelector(selectAboutDialogOpen);
+    const dispatch = useDispatch();
+
+    const handleCloseClicked = useCallback(() => dispatch(closeAboutDialog()), [dispatch]);
 
     return <AboutDialog open={open} onClose={handleCloseClicked} />;
 };
 
-const mapStateToProps = (state) => ({
-    open: state.uiState.aboutDialogOpen,
-});
-const mapDispatchToProps = {
-    onClose: closeAboutDialog,
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AboutDialogContainer);
+export default AboutDialogContainer;
