@@ -2,7 +2,7 @@
 .page-control {
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: clip;
 }
 
 .page-control__button-box {
@@ -10,6 +10,7 @@
     transition-property: width;
     transition-duration: 500ms;
     width: 32px;
+    height: 32px;
     flex-grow: 0;
     flex-shrink: 0;
     text-align: center;

@@ -17,7 +17,7 @@ const PageControlButton = ({ right, visible, onClick }) => {
     const icon = right ? faChevronRight : faChevronLeft;
     return (
         <Transition show={visible} as="div" className={className}>
-            <Button onClick={onClick}>
+            <Button onClick={onClick} tabIndex="-1">
                 <FontAwesomeIcon icon={icon} />
             </Button>
         </Transition>
@@ -27,21 +27,25 @@ const PageControlButton = ({ right, visible, onClick }) => {
 const PageControl = ({ children }) => {
     const [pageNo, setPageNo] = React.useState(0);
 
-    const _handleNextPageClick = () => {
+    const handleNextPageClick = () => {
         const newPageNo = Math.min(children.length - 1, pageNo + 1);
         setPageNo(newPageNo);
     };
 
-    const _handlePreviousPageClick = () => {
+    const handlePreviousPageClick = () => {
         const newPageNo = Math.max(0, pageNo - 1);
         setPageNo(newPageNo);
+    };
+
+    const handlePageFocused = (pageIndex) => {
+        setPageNo(pageIndex);
     };
 
     return (
         <div className="page-control">
             <PageControlButton
                 visible={pageNo != 0}
-                onClick={_handlePreviousPageClick}
+                onClick={handlePreviousPageClick}
             />
             <div
                 className="page-control__content"
@@ -53,6 +57,7 @@ const PageControl = ({ children }) => {
                         className={classNames('page-control__page', {
                             'page-control__page--hidden': index !== pageNo,
                         })}
+                        onFocus={() => handlePageFocused(index)}
                     >
                         {child}
                     </div>
@@ -61,7 +66,7 @@ const PageControl = ({ children }) => {
             <PageControlButton
                 right
                 visible={pageNo < children.length - 1}
-                onClick={_handleNextPageClick}
+                onClick={handleNextPageClick}
             />
         </div>
     );
