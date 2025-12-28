@@ -1,37 +1,37 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPatchParam } from '../../redux/patchEditorSlice';
 import patchSchemaManager from '../../services/PatchSchemaManager';
 import Knob from './Knob';
+import { selectPatch } from '../../redux/selectors';
+import { useCallback } from 'react';
 
-const mapStateToProps = (state, ownProps) => {
-    const { path } = ownProps;
-    const param = patchSchemaManager.getParamInfo(
-        path,
-        state.patchEditor.patch
-    );
+const ParamKnob = ({ path, ...props }) => {
+    const patch = useSelector(selectPatch);
+    const param = patchSchemaManager.getParamInfo(path, patch);
     if (!param) {
         throw new Error(`Undefined parameter: ${path}`);
     }
     const { range } = param;
     const [min, max] = range;
-    const value = patchSchemaManager.getParamValue(
-        path,
-        state.patchEditor.patch
-    );
+    const value = patchSchemaManager.getParamValue(path, patch);
     const formatter = param.formatter;
 
-    return {
-        min,
-        max,
-        value,
-        formatter,
-    };
+    const dispatch = useDispatch();
+    const handleValueChange = useCallback(
+        (newValue) => dispatch(setPatchParam(path, newValue)),
+        [dispatch, path]
+    );
+
+    return (
+        <Knob
+            min={min}
+            max={max}
+            value={value}
+            formatter={formatter}
+            onValueChange={handleValueChange}
+            {...props}
+        />
+    );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        onValueChange: value => dispatch(setPatchParam(ownProps.path, value)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Knob);
+export default ParamKnob;
