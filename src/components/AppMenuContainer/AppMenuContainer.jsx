@@ -1,35 +1,36 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
     openAboutDialog,
     openExportSysExDialog,
     openSettingsDialog,
 } from '../../redux/uiStateSlice';
 import AppMenu from '../AppMenu/AppMenu';
+import { useCallback } from 'react';
 
-const AppMenuContainer = ({
-    appController,
-    onSettingsClick,
-    onExportSysExClick,
-    onAboutClick,
-}) => {
+const AppMenuContainer = ({ appController }) => {
+    const dispatch = useDispatch();
+    const handleSettingsClicked = useCallback(() => {
+        dispatch(openSettingsDialog());
+    }, [dispatch]);
+    const handleExportSysExClicked = useCallback(() => {
+        dispatch(openExportSysExDialog());
+    }, [dispatch]);
+    const handleAboutClicked = useCallback(() => {
+        dispatch(openAboutDialog());
+    }, [dispatch]);
+
     return (
         <>
             <AppMenu
                 onOpenPatchClick={() => appController.openPatchClicked()}
                 onSavePatchClick={() => appController.savePatchClicked()}
-                onExportSysExClick={onExportSysExClick}
+                onExportSysExClick={handleExportSysExClicked}
                 onReceivePatchClick={() => appController.receivePatchClicked()}
-                onSettingsClick={onSettingsClick}
-                onAboutClick={onAboutClick}
+                onSettingsClick={handleSettingsClicked}
+                onAboutClick={handleAboutClicked}
             />
         </>
     );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    onSettingsClick: () => dispatch(openSettingsDialog()),
-    onExportSysExClick: () => dispatch(openExportSysExDialog()),
-    onAboutClick: () => dispatch(openAboutDialog()),
-});
-
-export default connect(undefined, mapDispatchToProps)(AppMenuContainer);
+export default AppMenuContainer;

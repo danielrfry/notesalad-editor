@@ -4,13 +4,14 @@ import ConnectionButton from '../../ConnectionButton/ConnectionButton';
 import classNames from 'classnames';
 import ColumnTitle from '../../ColumnTitle/ColumnTitle';
 import ParamKnob from '../../Knob/ParamKnob';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modes } from '../../../types';
 import { setOPLPatch4Op } from '../../../redux/patchEditorSlice';
 import Button from '../../Button/Button';
+import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
+import { useCallback } from 'react';
 
 import './OPLGlobalParams.css';
-import UIGroupEnabledContext from '../../UIGroupEnabledContext/UIGroupEnabledContext';
 
 const getConnectionButtons = (is4Op) => {
     if (is4Op) {
@@ -32,14 +33,20 @@ const getConnectionButtons = (is4Op) => {
     }
 };
 
-const OPLGlobalParams = ({ enabled, is4Op, onSet4Op }) => {
-    const _handle2OpClicked = () => {
-        onSet4Op(false);
-    };
+const selectIs4Op = (state) => state.patchEditor.patch[Modes.OPL].is4Op;
 
-    const _handle4OpClicked = () => {
-        onSet4Op(true);
-    };
+const OPLGlobalParams = ({ enabled }) => {
+    const is4Op = useSelector(selectIs4Op);
+
+    const dispatch = useDispatch();
+
+    const _handle2OpClicked = useCallback(() => {
+        dispatch(setOPLPatch4Op(false));
+    }, [dispatch]);
+
+    const _handle4OpClicked = useCallback(() => {
+        dispatch(setOPLPatch4Op(true));
+    }, [dispatch]);
 
     return (
         <UIGroupEnabledContext.Provider value={enabled}>
@@ -80,12 +87,4 @@ const OPLGlobalParams = ({ enabled, is4Op, onSet4Op }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    is4Op: state.patchEditor.patch[Modes.OPL].is4Op,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    onSet4Op: (new4OpMode) => dispatch(setOPLPatch4Op(new4OpMode)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OPLGlobalParams);
+export default OPLGlobalParams;

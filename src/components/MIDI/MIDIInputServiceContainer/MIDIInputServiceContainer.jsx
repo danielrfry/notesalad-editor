@@ -1,19 +1,24 @@
 import { useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPatchParamFromCC } from '../../../redux/patchEditorSlice';
 import { CONTROL_TO_PARAM_MAPS } from '../../../services/ControlToParamMaps';
 import MIDIInputServiceWrapper from '../MIDIInputServiceWrapper/MIDIInputServiceWrapper';
+import { selectMode } from '../../../redux/selectors';
 
-const MIDIInputServiceContainer = ({ controlInputPort, setParam, mode }) => {
+const MIDIInputServiceContainer = ({ controlInputPort }) => {
+    const mode = useSelector(selectMode);
+
+    const dispatch = useDispatch();
+
     const handleParamChange = useCallback(
         (param, value) => {
             const patchParam = CONTROL_TO_PARAM_MAPS[mode][param];
             if (patchParam !== undefined) {
                 const paramFullPath = `${mode}.${patchParam}`;
-                setParam(paramFullPath, value);
+                dispatch(setPatchParamFromCC(paramFullPath, value));
             }
         },
-        [mode, setParam]
+        [mode, dispatch]
     );
 
     return (
@@ -24,15 +29,4 @@ const MIDIInputServiceContainer = ({ controlInputPort, setParam, mode }) => {
     );
 };
 
-const mapDispatchToProps = {
-    setParam: setPatchParamFromCC,
-};
-
-const mapStateToProps = (state) => ({
-    mode: state.patchEditor.mode,
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MIDIInputServiceContainer);
+export default MIDIInputServiceContainer;
