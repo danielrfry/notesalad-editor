@@ -57,6 +57,7 @@ const PageControl = ({ children }) => {
                         className={classNames('page-control__page', {
                             'page-control__page--hidden': index !== pageNo,
                         })}
+                        style={{ transform: `translateX(${index * 100}%)` }}
                         onFocus={() => handlePageFocused(index)}
                     >
                         {child}

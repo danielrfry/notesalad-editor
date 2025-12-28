@@ -32,17 +32,19 @@
 }
 
 .page-control__content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "content";
+
     flex-grow: 1;
-    width: calc(100% - 32px);
     transition-property: transform;
     transition-duration: 500ms;
     transform: none;
 }
 
 .page-control__page {
-    width: 100%;
-    flex-shrink: 0;
+    grid-area: content;
     transition-property: opacity;
     transition-duration: 500ms;
     opacity: 1;

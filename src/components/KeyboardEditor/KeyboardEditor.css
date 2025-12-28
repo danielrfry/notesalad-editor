@@ -6,6 +6,7 @@
     align-items: stretch;
     align-content: flex-start;
 }
+
 .keyboard-editor__keyboard {
     flex-grow: 0;
     flex-shrink: 0;
@@ -14,9 +15,10 @@
     position: relative;
     width: 85px;
 }
+
 .keyboard-editor__editor {
     flex-grow: 1;
     flex-shrink: 0;
     margin-right: 30px;
-    max-width: 1200px;
+    max-width: 1400px;
 }
