@@ -1,17 +1,22 @@
-import { connect } from 'react-redux';
 import { setPatchParam } from '../../redux/patchEditorSlice';
 import patchSchemaManager from '../../services/PatchSchemaManager';
 import DropDownList from './DropDownList';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const mapStateToProps = (state, ownProps) => ({
-    value: patchSchemaManager.getParamValue(
-        ownProps.path,
-        state.patchEditor.patch
-    ),
-});
+const ParamDropDownList = ({ path, ...props }) => {
+    const selectParamValue = useCallback(
+        (state) =>
+            patchSchemaManager.getParamValue(path, state.patchEditor.patch),
+        [path]
+    );
+    const dispatch = useDispatch();
+    const onChange = useCallback(
+        (value) => dispatch(setPatchParam(path, value)),
+        [dispatch, path]
+    );
+    const value = useSelector(selectParamValue);
+    return <DropDownList value={value} onChange={onChange} {...props} />;
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    onChange: value => dispatch(setPatchParam(ownProps.path, value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DropDownList);
+export default ParamDropDownList;
