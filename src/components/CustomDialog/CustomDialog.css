@@ -1,6 +1,7 @@
 .custom-dialog {
     position: fixed;
     inset: 0;
+    z-index: 1000;
 }
 
 .custom-dialog__backdrop {
