@@ -1,8 +1,10 @@
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import patchSchemaManager from '../../../services/PatchSchemaManager';
 import NRPNContainer from '../NRPNContainer/NRPNContainer';
+import { selectMode } from '../../../redux/selectors';
 
-const MIDIPatchContainer = ({ mode }) => {
+const MIDIPatchContainer = () => {
+    const mode = useSelector(selectMode);
     const schema = patchSchemaManager.schemas[mode];
 
     return schema?.params.map((param) => (
@@ -14,8 +16,4 @@ const MIDIPatchContainer = ({ mode }) => {
     ));
 };
 
-const mapStateToProps = (state) => ({
-    mode: state.patchEditor.mode,
-});
-
-export default connect(mapStateToProps)(MIDIPatchContainer);
+export default MIDIPatchContainer;
